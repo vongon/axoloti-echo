@@ -1,0 +1,226 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="jaffa/ctrl/dial i" uuid="ac6473d0-05db-4d2a-84ff-698c9682ba3c" name="mix" x="322" y="168">
+      <params>
+         <frac32.u.map name="value" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mix/xfade" uuid="cfac82d503dc55fd2e3f90d8d05283610532b8c4" name="xfade_1" x="476" y="224">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="drj/audio/out_stereo_vol" uuid="awca1a567f535acc21055669829101d3ee7f0189" name="out_stereo_vol_1" x="644" y="238">
+      <params>
+         <frac32.u.map name="volume" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="audio/in left" uuid="d40e60b7641fe75af4d7c91b45bb038aacafc52e" name="in_1" x="168" y="280">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="mix/xfade" uuid="cfac82d503dc55fd2e3f90d8d05283610532b8c4" name="xfade_2" x="476" y="308">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="vongon-rngs/reverb" uuid="vongon-bb0fb9e0-aafe-4501-ba83-897f2530751d" name="reverb_1" x="294" y="378">
+      <params>
+         <frac32.u.map name="amount" value="37.0"/>
+         <frac32.u.map name="time" value="37.5"/>
+         <frac32.u.map name="diffusion" value="46.4"/>
+         <frac32.u.map name="gain" value="13.5"/>
+         <frac32.u.map name="lowpass" value="14.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="70" y="686" text="Bypass footswitch"/>
+   <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_1" x="70" y="714">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PC5"/>
+         <combo attributeName="mode" selection="pulldown"/>
+      </attribs>
+   </obj>
+   <obj type="deadsy/input/debounce1" uuid="dd7c32f9-81e3-4570-bea6-1e87c04029ed" name="debounce1_1" x="168" y="714">
+      <params/>
+      <attribs>
+         <spinner attributeName="period" value="3"/>
+         <combo attributeName="mode" selection="fast 0 to 1"/>
+      </attribs>
+   </obj>
+   <obj type="logic/toggle" uuid="f42f0d3aab552c17bc78b9e65f85dc24f977503d" name="toggle_1" x="322" y="714">
+      <params/>
+      <attribs/>
+   </obj>
+   <patchobj type="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad" name="bypass-control" x="406" y="714">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[bool bypass_state;
+bool bypass_input;
+uint16_t ADAU1961_REG_R22_PMIXL0;
+uint16_t ADAU1961_REG_R23_PMIXL1;
+uint16_t ADAU1961_REG_R24_PMIXR0;
+uint16_t ADAU1961_REG_R25_PMIXR1;
+
+uint16_t ADAU1961_REG_R31_PLLVOL;
+uint16_t ADAU1961_REG_R32_PLRVOL;
+
+void setup(void){
+	bypass_state = false;
+	bypass_input = false;
+	ADAU1961_REG_R22_PMIXL0 = 0x401C;
+	ADAU1961_REG_R23_PMIXL1 = 0x401D;
+	ADAU1961_REG_R24_PMIXR0 = 0x401E;
+	ADAU1961_REG_R25_PMIXR1 = 0x401F;
+		
+	ADAU1961_REG_R31_PLLVOL = 0x4025;
+	ADAU1961_REG_R32_PLRVOL = 0x4026;
+}
+
+void loop(void){
+	if(in1 > (40<<21)){
+		out1 = 0x1;
+		bypass_input = true;
+	} else {
+		out1 = 0x0;
+		bypass_input = false;
+	}
+	if(bypass_input && !bypass_state) {
+		bypass_state = true;
+		ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL, 0x07); // mute left channel
+		ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL, 0x07); // mute right channel
+		chThdSleepMilliseconds(8); // wait for channel to mute
+		
+		ADAU1961_WriteRegister(ADAU1961_REG_R22_PMIXL0, 0x01); // mute Left DAC, no aux mix
+		ADAU1961_WriteRegister(ADAU1961_REG_R23_PMIXL1, 0x06); // unmute Left Record Mixer
+		ADAU1961_WriteRegister(ADAU1961_REG_R24_PMIXR0, 0x01); // mute Right DAC, no aux mix
+		ADAU1961_WriteRegister(ADAU1961_REG_R25_PMIXR1, 0x60); // unmute Right Record Mixer
+		
+		ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL, 0xE7); // unmute left channel
+		ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL, 0xE7); // unmute right channel
+	} else if (!bypass_input && bypass_state) {
+		bypass_state = false;
+		ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL, 0x07); // mute left channel
+		ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL, 0x07); // mute right channel
+		chThdSleepMilliseconds(8); // wait for channel to mute
+		
+		ADAU1961_WriteRegister(ADAU1961_REG_R22_PMIXL0, 0x21); // unmute DAC, no aux mix
+		ADAU1961_WriteRegister(ADAU1961_REG_R23_PMIXL1, 0x00); // mute Left Record Mixer
+		ADAU1961_WriteRegister(ADAU1961_REG_R24_PMIXR0, 0x41); // unmute DAC, no aux mix
+		ADAU1961_WriteRegister(ADAU1961_REG_R25_PMIXR1, 0x00); // mute Right Record Mixer
+
+		ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL, 0xE7); // unmute left channel
+		ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL, 0xE7); // unmute right channel
+	}
+}]]></sText>
+         </text>
+      </attribs>
+      <object id="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad">
+         <sDescription>script with 2 inputs and 2 outputs, running in a separate thread, you must define &quot;void setup(void){}&quot; and &quot;void loop(void)&quot;</sDescription>
+         <author>Johannes Taelman</author>
+         <license>BSD</license>
+         <helpPatch>script.axh</helpPatch>
+         <inlets>
+            <frac32 name="in1_" description="in1"/>
+         </inlets>
+         <outlets>
+            <frac32 name="out1_" description="out1"/>
+         </outlets>
+         <displays/>
+         <params/>
+         <attribs>
+            <text name="script"/>
+         </attribs>
+         <includes/>
+         <code.declaration><![CDATA[int32_t in1,in2;
+int32_t out1,out2;
+attr_script
+msg_t ThreadX2(){
+  setup();
+  while(!chThdShouldTerminate()){
+     loop();
+     chThdSleepMilliseconds(1);
+  }
+  chThdExit((msg_t)0);
+}
+static msg_t ThreadX(void *arg) {
+((attr_parent *)arg)->ThreadX2();
+}
+WORKING_AREA(waThreadX, 1024);
+Thread *Thd;]]></code.declaration>
+         <code.init><![CDATA[in1=0;in2=0;out1=0;out2=0;
+  Thd = chThdCreateStatic(waThreadX, sizeof(waThreadX),
+                    NORMALPRIO, ThreadX, (void *)this);]]></code.init>
+         <code.dispose><![CDATA[chThdTerminate(Thd);
+chThdWait(Thd);]]></code.dispose>
+         <code.krate><![CDATA[outlet_out1__ = this->out1;
+this->in1 = inlet_in1__;]]></code.krate>
+      </object>
+   </patchobj>
+   <obj type="disp/hex" uuid="87617898f70d90033f8add921438bf0d11721fdd" name="hex_1" x="504" y="714">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="disp/bool" uuid="a0ee71d48208b71752cbb8c05e55145106ef3946" name="bool_1" x="322" y="770">
+      <params/>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="in_1" outlet="wave"/>
+         <dest obj="xfade_1" inlet="i1"/>
+         <dest obj="xfade_2" inlet="i1"/>
+         <dest obj="reverb_1" inlet="l"/>
+         <dest obj="reverb_1" inlet="r"/>
+      </net>
+      <net>
+         <source obj="xfade_2" outlet="o"/>
+         <dest obj="out_stereo_vol_1" inlet="right"/>
+      </net>
+      <net>
+         <source obj="xfade_1" outlet="o"/>
+         <dest obj="out_stereo_vol_1" inlet="left"/>
+      </net>
+      <net>
+         <source obj="mix" outlet="o"/>
+         <dest obj="xfade_1" inlet="c"/>
+         <dest obj="xfade_2" inlet="c"/>
+      </net>
+      <net>
+         <source obj="bypass-control" outlet="out1_"/>
+         <dest obj="hex_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="toggle_1" outlet="o"/>
+         <dest obj="bool_1" inlet="in"/>
+         <dest obj="bypass-control" inlet="in1_"/>
+      </net>
+      <net>
+         <source obj="digital_1" outlet="out"/>
+         <dest obj="debounce1_1" inlet="i0"/>
+      </net>
+      <net>
+         <source obj="debounce1_1" outlet="o0"/>
+         <dest obj="toggle_1" inlet="trig"/>
+      </net>
+      <net>
+         <source obj="reverb_1" outlet="l"/>
+         <dest obj="xfade_1" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="reverb_1" outlet="r"/>
+         <dest obj="xfade_2" inlet="i2"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>966</x>
+      <y>254</y>
+      <width>921</width>
+      <height>1054</height>
+   </windowPos>
+</patch-1.0>

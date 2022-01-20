@@ -1,0 +1,224 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="audio/in stereo" uuid="99848ad6d90a8e615e83b2e619cfc806f28e7281" name="in_1" x="56" y="140">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="audio/out stereo" uuid="a1ca7a567f535acc21055669829101d3ee7f0189" name="out_1" x="588" y="140">
+      <params/>
+      <attribs/>
+   </obj>
+   <patchobj type="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad" name="bypass-stereo" x="378" y="336">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[bool bypass_state;
+bool bypass_input;
+bool mono_state;
+bool mono_input;
+uint16_t ADAU1961_REG_R22_PMIXL0;
+uint16_t ADAU1961_REG_R23_PMIXL1;
+uint16_t ADAU1961_REG_R24_PMIXR0;
+uint16_t ADAU1961_REG_R25_PMIXR1;
+uint16_t ADAU1961_REG_R31_PLLVOL;
+uint16_t ADAU1961_REG_R32_PLRVOL;
+uint16_t ADAU1961_REG_R8_LDIVOL;
+uint16_t ADAU1961_REG_R9_RDIVOL;
+uint16_t ADAU1961_REG_R26_PLRML;
+uint16_t ADAU1961_REG_R27_PLRMR;
+uint16_t ADAU1961_REG_R19_ADCC;
+uint16_t ADAU1961_REG_R17_CON0;
+
+uint16_t outputLevel;
+uint16_t inputLevelAnalog;
+uint16_t inputLevelDigital;
+
+
+void setup(void){
+	bypass_state = false;
+	bypass_input = false;
+	mono_state = false;
+	mono_input = false;
+	ADAU1961_REG_R22_PMIXL0 = 0x401C;
+	ADAU1961_REG_R23_PMIXL1 = 0x401D;
+	ADAU1961_REG_R24_PMIXR0 = 0x401E;
+	ADAU1961_REG_R25_PMIXR1 = 0x401F;
+	ADAU1961_REG_R31_PLLVOL = 0x4025;
+	ADAU1961_REG_R32_PLRVOL = 0x4026;
+	ADAU1961_REG_R8_LDIVOL = 0x400E;
+	ADAU1961_REG_R9_RDIVOL = 0x400F;
+	ADAU1961_REG_R26_PLRML = 0x4020;
+	ADAU1961_REG_R27_PLRMR = 0x4021;
+	ADAU1961_REG_R19_ADCC = 0x4019;
+	ADAU1961_REG_R17_CON0 = 0x0417;
+
+	outputLevel = 63;
+	inputLevelAnalog = 8;
+	inputLevelDigital = 8;
+
+// v7 values
+//	outputLevel = 63;  // +6dB
+//	inputLevelAnalog = 8; // -4.5dB
+//	inputLevelDigital = 10; // -6dB
+}
+
+void muteOutput(){
+	ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL,(0<<2)+2); // mute left channel
+	ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL,(0<<2)+2); // mute right channel
+	//chThdSleepMilliseconds(4); // wait for channel to mute
+}
+
+void unmuteOutput(){
+    	ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL,(outputLevel<<2)+2);
+    	ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL,(outputLevel<<2)+2);
+}
+
+void stereoRouting() {
+    ADAU1961_WriteRegister(ADAU1961_REG_R26_PLRML, (1<<1)+1);
+    ADAU1961_WriteRegister(ADAU1961_REG_R27_PLRMR, (1<<3)+1);
+}
+
+void monoRouting() {
+    ADAU1961_WriteRegister(ADAU1961_REG_R26_PLRML, (1<<1)+1);
+    ADAU1961_WriteRegister(ADAU1961_REG_R27_PLRMR, (1<<1)+1);
+}
+
+void loop(void){
+	if(in1 > 0){
+		out1 = 0x1;
+		bypass_input = true;
+	} else {
+		out1 = 0x0;
+		bypass_input = false;
+	}
+	if(rin > 0) {
+		mono_input = false;
+	} else {
+		mono_input = true;
+	}
+
+	if(mono_input && !mono_state && bypass_state) {
+		mono_state = true;
+		monoRouting();
+	} else if (!mono_input && mono_state && bypass_state) {
+		mono_state = false;
+		stereoRouting();
+	}
+	if(bypass_input && !bypass_state) {
+		bypass_state = true;
+		muteOutput();
+    		ADAU1961_WriteRegister(ADAU1961_REG_R22_PMIXL0, 0x01); // mute DAC
+    		ADAU1961_WriteRegister(ADAU1961_REG_R24_PMIXR0, 0x01); // mute DAC
+		ADAU1961_WriteRegister(ADAU1961_REG_R23_PMIXL1, 0x06); // unmute Left Record Mixer
+		ADAU1961_WriteRegister(ADAU1961_REG_R25_PMIXR1, 0x60); // unmute Right Record Mixer
+		ADAU1961_WriteRegister(ADAU1961_REG_R8_LDIVOL, (inputLevelAnalog<<2)+3); // 16 = 0dB In
+    		ADAU1961_WriteRegister(ADAU1961_REG_R9_RDIVOL, (inputLevelAnalog<<2)+3); // 16 = 0dB In
+		unmuteOutput();
+	} else if (!bypass_input && bypass_state) {
+		bypass_state = false;
+		muteOutput();
+		ADAU1961_WriteRegister(ADAU1961_REG_R23_PMIXL1, 0x00); // mute Left Record Mixer
+		ADAU1961_WriteRegister(ADAU1961_REG_R25_PMIXR1, 0x00); // mute Right Record Mixer
+    		ADAU1961_WriteRegister(ADAU1961_REG_R22_PMIXL0, 0x21); // unmute DAC
+    		ADAU1961_WriteRegister(ADAU1961_REG_R24_PMIXR0, 0x41); // unmute DAC
+		ADAU1961_WriteRegister(ADAU1961_REG_R8_LDIVOL, (inputLevelDigital<<2)+3); // 16 = 0dB In
+    		ADAU1961_WriteRegister(ADAU1961_REG_R9_RDIVOL, (inputLevelDigital<<2)+3); // 16 = 0dB In
+		unmuteOutput();
+	}
+}]]></sText>
+         </text>
+      </attribs>
+      <object id="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad">
+         <sDescription>script with 2 inputs and 2 outputs, running in a separate thread, you must define &quot;void setup(void){}&quot; and &quot;void loop(void)&quot;</sDescription>
+         <author>Johannes Taelman</author>
+         <license>BSD</license>
+         <helpPatch>script.axh</helpPatch>
+         <inlets>
+            <frac32 name="in1_" description="in1"/>
+            <bool32 name="rin_" description="rin"/>
+         </inlets>
+         <outlets>
+            <frac32 name="out1_" description="out1"/>
+         </outlets>
+         <displays/>
+         <params/>
+         <attribs>
+            <text name="script"/>
+         </attribs>
+         <includes/>
+         <code.declaration><![CDATA[int32_t in1,in2, rin;
+int32_t out1,out2;
+attr_script
+msg_t ThreadX2(){
+  setup();
+  while(!chThdShouldTerminate()){
+     loop();
+     chThdSleepMilliseconds(1);
+  }
+  chThdExit((msg_t)0);
+}
+static msg_t ThreadX(void *arg) {
+((attr_parent *)arg)->ThreadX2();
+}
+WORKING_AREA(waThreadX, 1024);
+Thread *Thd;]]></code.declaration>
+         <code.init><![CDATA[in1=0;in2=0;out1=0;out2=0;rin=0;
+  Thd = chThdCreateStatic(waThreadX, sizeof(waThreadX),
+                    NORMALPRIO, ThreadX, (void *)this);]]></code.init>
+         <code.dispose><![CDATA[chThdTerminate(Thd);
+chThdWait(Thd);]]></code.dispose>
+         <code.krate><![CDATA[outlet_out1__ = this->out1;
+this->in1 = inlet_in1__;
+this->rin = inlet_rin__;]]></code.krate>
+      </object>
+   </patchobj>
+   <obj type="disp/hex" uuid="87617898f70d90033f8add921438bf0d11721fdd" name="hex_1" x="504" y="336">
+      <params/>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="588" y="350" text="0x00 means digital"/>
+   <obj type="ctrl/toggle" uuid="42b8134fa729d54bfc8d62d6ef3fa99498c1de99" name="toggle_1" x="224" y="364">
+      <params>
+         <bool32.tgl name="b" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="588" y="378" text="0x01 means analog"/>
+   <obj type="ctrl/toggle" uuid="42b8134fa729d54bfc8d62d6ef3fa99498c1de99" name="toggle_2" x="224" y="434">
+      <params>
+         <bool32.tgl name="b" value="1"/>
+      </params>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="toggle_1" outlet="o"/>
+         <dest obj="bypass-stereo" inlet="in1_"/>
+      </net>
+      <net>
+         <source obj="bypass-stereo" outlet="out1_"/>
+         <dest obj="hex_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="toggle_2" outlet="o"/>
+         <dest obj="bypass-stereo" inlet="rin_"/>
+      </net>
+      <net>
+         <source obj="in_1" outlet="left"/>
+         <dest obj="out_1" inlet="left"/>
+      </net>
+      <net>
+         <source obj="in_1" outlet="right"/>
+         <dest obj="out_1" inlet="right"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>1357</x>
+      <y>291</y>
+      <width>1051</width>
+      <height>751</height>
+   </windowPos>
+</patch-1.0>

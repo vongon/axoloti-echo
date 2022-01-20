@@ -1,0 +1,152 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="math/*c" uuid="7a66f52a9594e7e9eb31328ea725cb3641a80b55" name="*c_1" x="350" y="14">
+      <params>
+         <frac32.u.map name="amp" value="46.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="audio/out left" uuid="b11a3c09b2fdd575ea8212f2ce7743d5269253b1" name="dac_11" x="476" y="14">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="audio/out right" uuid="e58a4cbbb087052c5480366e3f5d3a04aa319777" name="dac_21" x="476" y="70">
+      <params/>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="308" y="112" text="adjust the amplitude"/>
+   <comment type="patch/comment" x="28" y="140" text="Turn this dial to adjust the frequency"/>
+   <comment type="patch/comment" x="28" y="154" text="Click on the label left of the dial to see different units:"/>
+   <comment type="patch/comment" x="476" y="154" text="left and right audio output"/>
+   <comment type="patch/comment" x="28" y="168" text="- Frequency in Hz"/>
+   <comment type="patch/comment" x="28" y="182" text="- Musical note, octave number, deviation from standard tuning"/>
+   <comment type="patch/comment" x="28" y="196" text="- Ratio (referenced to musical note E4)"/>
+   <comment type="patch/comment" x="28" y="238" text="hold shift to make small adjustments using mouse"/>
+   <obj type="ctrl/toggle" uuid="42b8134fa729d54bfc8d62d6ef3fa99498c1de99" name="FREEZE" x="392" y="238">
+      <params>
+         <bool32.tgl name="b" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="disp/scope 128 b trig" uuid="11747dcd1dc9afe4919f537c861fb18b80b4e4e" name="scope_128s_trig1" x="476" y="238">
+      <params/>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="672" y="238" text="time domain plot"/>
+   <comment type="patch/comment" x="714" y="252" text="vertical middle = zero"/>
+   <comment type="patch/comment" x="28" y="266" text="when the dial is focused (click)"/>
+   <comment type="patch/comment" x="42" y="280" text="you can also enter a number followed by enter to accept"/>
+   <comment type="patch/comment" x="714" y="280" text="up = positive value"/>
+   <comment type="patch/comment" x="714" y="294" text="down = negative value"/>
+   <comment type="patch/comment" x="714" y="322" text="left = early, right = late"/>
+   <comment type="patch/comment" x="714" y="336" text="(width = 128 samples = 2.6 milliseconds)"/>
+   <obj type="osc/sine" uuid="6e094045cca76a9dbf7ebfa72e44e4700d2b3ba" name="osc_1" x="56" y="490">
+      <params>
+         <frac32.s.map name="pitch" value="-4.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="560" y="490" text="Open next tutorial -&gt;"/>
+   <hyperlink type="patch/hyperlink" name="02_keyboard_controlled_sine_oscillator.axp" x="686" y="490"/>
+   <obj type="lfo/square" uuid="de6909eb64db13af5b43f979a4c130024b3a4793" name="square_1" x="266" y="504">
+      <params>
+         <frac32.s.map name="pitch" value="2.6000000000000014"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="osc/supersaw" uuid="ece83feb36cfaee7dc3964b75c485774ea0309cf" name="supersaw_1" x="84" y="630">
+      <params>
+         <frac32.s.map name="pitch" value="-37.0"/>
+         <frac32.u.map name="detune" value="0.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="env/ad" uuid="255cb0cd67470c7498f9c33b820facd26aa629ce" name="ad_1" x="476" y="630">
+      <params>
+         <frac32.s.map name="a" value="-63.0"/>
+         <frac32.s.map name="d" value="-4.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/gain" uuid="6b4dd3da49f98e54900f6c20031f38f4624fa364" name="gain_2" x="630" y="686">
+      <params>
+         <frac32.u.map name="amp" value="7.799999713897705"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="filter/vcf3" uuid="92455c652cd098cbb682a5497baa18abbf2ef865" name="vcf3_1" x="826" y="714">
+      <params>
+         <frac32.s.map name="pitch" value="-38.0"/>
+         <frac32.u.map name="reso" value="25.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="osc/saw" uuid="739ecc36017ef3249479b8f01716b8bbfba9abc1" name="saw_1" x="168" y="798">
+      <params>
+         <frac32.s.map name="pitch" value="-21.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/*c" uuid="7a66f52a9594e7e9eb31328ea725cb3641a80b55" name="*c_2" x="406" y="896">
+      <params>
+         <frac32.u.map name="amp" value="16.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="chorus" uuid="8b1d11d5-a9c7-47bd-a721-e7bdbe45bfca" name="chorus_1" x="560" y="924">
+      <params>
+         <frac32.u.map name="depth" value="3.8499999046325684"/>
+         <frac32.s.map name="speed" value="-11.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="audio/in left" uuid="d40e60b7641fe75af4d7c91b45bb038aacafc52e" name="in_1" x="196" y="938">
+      <params/>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="*c_1" outlet="out"/>
+         <dest obj="dac_11" inlet="wave"/>
+         <dest obj="dac_21" inlet="wave"/>
+         <dest obj="scope_128s_trig1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="FREEZE" outlet="o"/>
+         <dest obj="scope_128s_trig1" inlet="hold"/>
+      </net>
+      <net>
+         <source obj="square_1" outlet="wave"/>
+         <dest obj="ad_1" inlet="trig"/>
+      </net>
+      <net>
+         <source obj="gain_2" outlet="out"/>
+         <dest obj="vcf3_1" inlet="pitch"/>
+      </net>
+      <net>
+         <source obj="ad_1" outlet="env"/>
+         <dest obj="gain_2" inlet="in"/>
+      </net>
+      <net>
+         <source obj="in_1" outlet="wave"/>
+         <dest obj="*c_2" inlet="in"/>
+      </net>
+      <net>
+         <source obj="*c_2" outlet="out"/>
+         <dest obj="chorus_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="chorus_1" outlet="L"/>
+         <dest obj="*c_1" inlet="in"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>732</x>
+      <y>163</y>
+      <width>1753</width>
+      <height>1252</height>
+   </windowPos>
+</patch-1.0>

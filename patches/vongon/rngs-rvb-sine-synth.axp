@@ -1,0 +1,155 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="jaffa/ctrl/dial i" uuid="ac6473d0-05db-4d2a-84ff-698c9682ba3c" name="mix" x="504" y="154">
+      <params>
+         <frac32.u.map name="value" value="17.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mix/xfade" uuid="cfac82d503dc55fd2e3f90d8d05283610532b8c4" name="xfade_1" x="966" y="238">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="midi/in/keyb" uuid="53b04874696932f38aceaa168bd5d9efb743716d" name="keyb1" x="28" y="294">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="drj/audio/out_stereo_vol" uuid="awca1a567f535acc21055669829101d3ee7f0189" name="out_stereo_vol_1" x="1078" y="308">
+      <params>
+         <frac32.u.map name="volume" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mix/xfade" uuid="cfac82d503dc55fd2e3f90d8d05283610532b8c4" name="xfade_2" x="966" y="322">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="osc/sine" uuid="6e094045cca76a9dbf7ebfa72e44e4700d2b3ba" name="osc_1" x="42" y="434">
+      <params>
+         <frac32.s.map name="pitch" value="0.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/*c" uuid="7a66f52a9594e7e9eb31328ea725cb3641a80b55" name="*c_1" x="168" y="448">
+      <params>
+         <frac32.u.map name="amp" value="7.149999618530273"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/*" uuid="c16a625a661f40e4b359db604dcd00b3befcdbe3" name="*_1" x="308" y="448">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="vongon-rngs/reverb" uuid="vongon-bb0fb9e0-aafe-4501-ba83-897f2530751d" name="reverb_1" x="448" y="476">
+      <params>
+         <frac32.u.map name="amount" value="64.0"/>
+         <frac32.u.map name="time" value="41.0"/>
+         <frac32.u.map name="diffusion" value="55.0"/>
+         <frac32.u.map name="gain" value="21.5"/>
+         <frac32.u.map name="lowpass" value="54.75"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mux/mux 2" uuid="539c246f4c360ac476e128cfbfa84348fb7f7e73" name="mux_1" x="756" y="560">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="mux/mux 2" uuid="539c246f4c360ac476e128cfbfa84348fb7f7e73" name="mux_2" x="756" y="658">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="vongon-lmnts/reverb" uuid="vongon-8027561C-A0B5-4DF8-A10E-3ED1274F2980" name="reverb_2" x="448" y="728">
+      <params>
+         <frac32.u.map name="amount" value="64.0"/>
+         <frac32.u.map name="time" value="38.0"/>
+         <frac32.u.map name="diffusion" value="52.5"/>
+         <frac32.u.map name="gain" value="15.5"/>
+         <frac32.u.map name="lowpass" value="51.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/button" uuid="ef3d13774349df85aa9bfecf30dbc91ab8488b3f" name="button_1" x="616" y="812">
+      <params>
+         <bool32.mom name="b" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="xfade_2" outlet="o"/>
+         <dest obj="out_stereo_vol_1" inlet="right"/>
+      </net>
+      <net>
+         <source obj="xfade_1" outlet="o"/>
+         <dest obj="out_stereo_vol_1" inlet="left"/>
+      </net>
+      <net>
+         <source obj="mix" outlet="o"/>
+         <dest obj="xfade_1" inlet="c"/>
+         <dest obj="xfade_2" inlet="c"/>
+      </net>
+      <net>
+         <source obj="keyb1" outlet="note"/>
+         <dest obj="osc_1" inlet="pitch"/>
+      </net>
+      <net>
+         <source obj="keyb1" outlet="gate"/>
+         <dest obj="*_1" inlet="b"/>
+      </net>
+      <net>
+         <source obj="osc_1" outlet="wave"/>
+         <dest obj="*c_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="*_1" outlet="result"/>
+         <dest obj="reverb_1" inlet="l"/>
+         <dest obj="reverb_1" inlet="r"/>
+         <dest obj="reverb_2" inlet="l"/>
+         <dest obj="reverb_2" inlet="r"/>
+      </net>
+      <net>
+         <source obj="*c_1" outlet="out"/>
+         <dest obj="*_1" inlet="a"/>
+      </net>
+      <net>
+         <source obj="reverb_1" outlet="l"/>
+         <dest obj="xfade_1" inlet="i1"/>
+         <dest obj="mux_1" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="reverb_1" outlet="r"/>
+         <dest obj="xfade_2" inlet="i1"/>
+         <dest obj="mux_2" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="reverb_2" outlet="l"/>
+         <dest obj="mux_1" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="reverb_2" outlet="r"/>
+         <dest obj="mux_2" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="mux_1" outlet="o"/>
+         <dest obj="xfade_1" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="mux_2" outlet="o"/>
+         <dest obj="xfade_2" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="button_1" outlet="o"/>
+         <dest obj="mux_1" inlet="s"/>
+         <dest obj="mux_2" inlet="s"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>657</x>
+      <y>157</y>
+      <width>1424</width>
+      <height>1163</height>
+   </windowPos>
+</patch-1.0>

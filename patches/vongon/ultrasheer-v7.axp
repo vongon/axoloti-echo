@@ -1,0 +1,2084 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="audio/in stereo" uuid="99848ad6d90a8e615e83b2e619cfc806f28e7281" name="in_2" x="504" y="42">
+      <params/>
+      <attribs/>
+   </obj>
+   <patcher type="patch/patcher" uuid="1aeee9a1-989c-4394-b45b-6b00710a1d44" name="router" x="742" y="42">
+      <params/>
+      <attribs/>
+      <subpatch appVersion="1.0.12">
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="IN L" x="56" y="28">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_1" x="378" y="42">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="OUT L" x="910" y="42">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="A-SEND L" x="476" y="56">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="A-RTN L" x="560" y="56">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_5" x="714" y="84">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_2" x="378" y="126">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="B-SEND L" x="476" y="154">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="B-RTN L" x="560" y="154">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="IN R" x="56" y="210">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_3" x="378" y="224">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="OUT R" x="910" y="224">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="A-SEND R" x="476" y="238">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="A-RTN R" x="560" y="238">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_6" x="714" y="266">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_4" x="378" y="322">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="B-SEND R" x="476" y="336">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="B-RTN R" x="560" y="336">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="order" x="56" y="378">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_3" x="182" y="378">
+            <params>
+               <frac32.s.map name="freq" value="-18.799999713897705"/>
+            </params>
+            <attribs/>
+         </obj>
+         <nets>
+            <net>
+               <source obj="IN L" outlet="inlet"/>
+               <dest obj="xfade_1" inlet="i1"/>
+               <dest obj="xfade_2" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="B-RTN L" outlet="inlet"/>
+               <dest obj="xfade_1" inlet="i2"/>
+               <dest obj="xfade_5" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="A-RTN L" outlet="inlet"/>
+               <dest obj="xfade_2" inlet="i1"/>
+               <dest obj="xfade_5" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="IN R" outlet="inlet"/>
+               <dest obj="xfade_3" inlet="i1"/>
+               <dest obj="xfade_4" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="B-RTN R" outlet="inlet"/>
+               <dest obj="xfade_3" inlet="i2"/>
+               <dest obj="xfade_6" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="A-RTN R" outlet="inlet"/>
+               <dest obj="xfade_4" inlet="i1"/>
+               <dest obj="xfade_6" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="xfade_1" outlet="o"/>
+               <dest obj="A-SEND L" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="xfade_2" outlet="o"/>
+               <dest obj="B-SEND L" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="xfade_3" outlet="o"/>
+               <dest obj="A-SEND R" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="xfade_4" outlet="o"/>
+               <dest obj="B-SEND R" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="xfade_5" outlet="o"/>
+               <dest obj="OUT L" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="xfade_6" outlet="o"/>
+               <dest obj="OUT R" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="order" outlet="inlet"/>
+               <dest obj="lowpass_3" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lowpass_3" outlet="out"/>
+               <dest obj="xfade_1" inlet="c"/>
+               <dest obj="xfade_2" inlet="c"/>
+               <dest obj="xfade_3" inlet="c"/>
+               <dest obj="xfade_4" inlet="c"/>
+               <dest obj="xfade_5" inlet="c"/>
+               <dest obj="xfade_6" inlet="c"/>
+            </net>
+         </nets>
+         <settings>
+            <subpatchmode>no</subpatchmode>
+         </settings>
+         <notes><![CDATA[]]></notes>
+         <windowPos>
+            <x>188</x>
+            <y>420</y>
+            <width>1138</width>
+            <height>929</height>
+         </windowPos>
+      </subpatch>
+   </patcher>
+   <obj type="audio/out stereo" uuid="a1ca7a567f535acc21055669829101d3ee7f0189" name="out_2" x="1176" y="42">
+      <params/>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="28" y="84" text="order toggle"/>
+   <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_3" x="28" y="98">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PA0"/>
+         <combo attributeName="mode" selection="pullup"/>
+      </attribs>
+   </obj>
+   <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_1" x="126" y="98">
+      <params>
+         <frac32.s.map name="freq" value="-19.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/&gt;" uuid="8112942c245dbc2edf7d7de122fe83b0dcd0a391" name="&gt;_1" x="224" y="98">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_8" x="294" y="98">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_1" x="224" y="154">
+      <params>
+         <frac32.u.map name="value" value="30.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="28" y="252" text="vibrato waveform"/>
+   <patcher type="patch/patcher" uuid="40623b4c-c573-4180-a50b-fcf5ba204e20" name="Vibrato" x="742" y="252">
+      <params/>
+      <attribs/>
+      <subpatch appVersion="1.0.12">
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="bypass" x="700" y="14">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_1" x="826" y="14">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_8" x="924" y="14">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="INL" x="14" y="28">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="jho/delay/write 32b" uuid="83196a4d0e64440a98034484a02cbbc6" name="delay_left" x="280" y="28">
+            <params/>
+            <attribs>
+               <combo attributeName="size" selection="2048 (42.66ms)"/>
+            </attribs>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_1" x="1148" y="28">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="OUTL" x="1246" y="28">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="INR" x="14" y="98">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mux/mux 2" uuid="539c246f4c360ac476e128cfbfa84348fb7f7e73" name="vib out r" x="126" y="98">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="jho/delay/write 32b" uuid="83196a4d0e64440a98034484a02cbbc6" name="delay_right" x="280" y="98">
+            <params/>
+            <attribs>
+               <combo attributeName="size" selection="2048 (42.66ms)"/>
+            </attribs>
+         </obj>
+         <obj type="jho/delay/read interp 32b" uuid="b5984ec2512c4f6a8f562f2a0b0e13aa" name="read_1" x="924" y="112">
+            <params>
+               <frac32.u.map name="time" value="0.0"/>
+            </params>
+            <attribs>
+               <objref attributeName="delayname" obj="delay_left"/>
+            </attribs>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="mono_in" x="14" y="168">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_2" x="1148" y="182">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="OUTR" x="1246" y="182">
+            <params/>
+            <attribs/>
+         </obj>
+         <comment type="patch/comment" x="182" y="196" text="if post_reverb, keep stereo image"/>
+         <obj type="logic/and 2" uuid="c67031682f552aa0a80b23377495c51ea28a8c9c" name="and_1" x="182" y="210">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="post_reverb" x="14" y="224">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_3" x="112" y="224">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="jho/delay/read interp 32b" uuid="b5984ec2512c4f6a8f562f2a0b0e13aa" name="read_2" x="924" y="238">
+            <params>
+               <frac32.u.map name="time" value="0.0"/>
+            </params>
+            <attribs>
+               <objref attributeName="delayname" obj="delay_right"/>
+            </attribs>
+         </obj>
+         <obj type="gpio/in/analog" uuid="1c0c845ed2d7e06ae5f377ba13d9d09f4747ac87" name="vibrato speed" x="14" y="322">
+            <params/>
+            <attribs>
+               <combo attributeName="channel" selection="PA7 (ADC1_IN7)"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_1" x="154" y="322">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/*c" uuid="7d5ef61c3bcd571ee6bbd8437ef3612125dfb225" name="vibrato_mult" x="266" y="322">
+            <params>
+               <frac32.u.map name="amp" value="0.029999732971191406"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="osc/sine lin" uuid="6a4458d598c9b8634b469d1a6e7f87971b5932f" name="sine_2" x="448" y="322">
+            <params>
+               <frac32.u.map name="freq" value="0.0019998550415039062"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="conv/bipolar2unipolar" uuid="5b5f9405be365706c1ad37266d9df07b9a1570ee" name="bipolar2unipolar_1" x="602" y="322">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="math/*" uuid="c16a625a661f40e4b359db604dcd00b3befcdbe3" name="*_1" x="742" y="322">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/xfade" uuid="375dc91d218e96cdc9cbc7e92adb48f705ef701a" name="xfade_3" x="840" y="322">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="random" x="616" y="392">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_3" x="728" y="392">
+            <params>
+               <frac32.s.map name="freq" value="-59.59999990463257"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gpio/in/analog" uuid="1c0c845ed2d7e06ae5f377ba13d9d09f4747ac87" name="vibrato depth" x="14" y="420">
+            <params/>
+            <attribs>
+               <combo attributeName="channel" selection="PA6 (ADC1_IN6)"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_2" x="154" y="420">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/*c" uuid="7d5ef61c3bcd571ee6bbd8437ef3612125dfb225" name="*c_1" x="266" y="420">
+            <params>
+               <frac32.u.map name="amp" value="8.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/*c" uuid="7d5ef61c3bcd571ee6bbd8437ef3612125dfb225" name="*c_5" x="154" y="560">
+            <params>
+               <frac32.u.map name="amp" value="23.199999809265137"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="noise/uniform" uuid="a3926ef22ae9ac217cd09933d90101848796eb78" name="uniform_1" x="252" y="560">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="conv/bipolar2unipolar" uuid="5b5f9405be365706c1ad37266d9df07b9a1570ee" name="bipolar2unipolar_2" x="336" y="560">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="math/*" uuid="c16a625a661f40e4b359db604dcd00b3befcdbe3" name="*_2" x="462" y="560">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/samplehold" uuid="354e2699eb9934cfdecc09f32e96284f3d10d78b" name="samplehold_1" x="560" y="560">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="filter/lp1" uuid="1b1fd7085e44d2b7b80b59b8d68796b909c1b2cc" name="lp1_1" x="672" y="560">
+            <params>
+               <frac32.s.map name="freq" value="-64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="filter/lp1" uuid="1b1fd7085e44d2b7b80b59b8d68796b909c1b2cc" name="lp1_2" x="770" y="560">
+            <params>
+               <frac32.s.map name="freq" value="-64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="filter/lp1" uuid="1b1fd7085e44d2b7b80b59b8d68796b909c1b2cc" name="lp1_3" x="868" y="560">
+            <params>
+               <frac32.s.map name="freq" value="-64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="filter/lp1" uuid="1b1fd7085e44d2b7b80b59b8d68796b909c1b2cc" name="lp1_4" x="966" y="560">
+            <params>
+               <frac32.s.map name="freq" value="-64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/*c" uuid="7d5ef61c3bcd571ee6bbd8437ef3612125dfb225" name="*c_4" x="154" y="686">
+            <params>
+               <frac32.u.map name="amp" value="48.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="lfo/square" uuid="de6909eb64db13af5b43f979a4c130024b3a4793" name="square_1" x="252" y="686">
+            <params>
+               <frac32.s.map name="pitch" value="-34.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="pulse/dirac" uuid="6ffcf69f4d093d7df59fd18b36d443a8abf043f3" name="dirac_1" x="350" y="686">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="math/inv" uuid="7f4c6cf4dcf79f9b0aa81c2eaf540405875714a3" name="inv_2" x="420" y="686">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="conv/bipolar2unipolar" uuid="5b5f9405be365706c1ad37266d9df07b9a1570ee" name="bipolar2unipolar_3" x="476" y="686">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="disp/dial p" uuid="44fd18b562e434b3230441681132dbeabb15cdc5" name="dial_2" x="252" y="784">
+            <params/>
+            <attribs/>
+         </obj>
+         <nets>
+            <net>
+               <source obj="INR" outlet="inlet"/>
+               <dest obj="vib out r" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="INL" outlet="inlet"/>
+               <dest obj="delay_left" inlet="in"/>
+               <dest obj="xfade_1" inlet="i2"/>
+               <dest obj="vib out r" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="bipolar2unipolar_1" outlet="o"/>
+               <dest obj="*_1" inlet="a"/>
+            </net>
+            <net>
+               <source obj="*c_1" outlet="out"/>
+               <dest obj="*_1" inlet="b"/>
+            </net>
+            <net>
+               <source obj="vibrato depth" outlet="out"/>
+               <dest obj="lowpass_2" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lowpass_1" outlet="out"/>
+               <dest obj="vibrato_mult" inlet="in"/>
+               <dest obj="*c_4" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lowpass_2" outlet="out"/>
+               <dest obj="*c_1" inlet="in"/>
+               <dest obj="*c_5" inlet="in"/>
+            </net>
+            <net>
+               <source obj="sine_2" outlet="wave"/>
+               <dest obj="bipolar2unipolar_1" inlet="i"/>
+            </net>
+            <net>
+               <source obj="read_2" outlet="out"/>
+               <dest obj="xfade_2" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="xfade_1" outlet="o"/>
+               <dest obj="OUTL" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="read_1" outlet="out"/>
+               <dest obj="xfade_1" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="xfade_2" outlet="o"/>
+               <dest obj="OUTR" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="lowpass_8" outlet="out"/>
+               <dest obj="xfade_1" inlet="c"/>
+               <dest obj="xfade_2" inlet="c"/>
+            </net>
+            <net>
+               <source obj="inv_1" outlet="o"/>
+               <dest obj="lowpass_8" inlet="in"/>
+            </net>
+            <net>
+               <source obj="bypass" outlet="inlet"/>
+               <dest obj="inv_1" inlet="i"/>
+            </net>
+            <net>
+               <source obj="mono_in" outlet="inlet"/>
+               <dest obj="and_1" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="vib out r" outlet="o"/>
+               <dest obj="delay_right" inlet="in"/>
+               <dest obj="xfade_2" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="vibrato speed" outlet="out"/>
+               <dest obj="lowpass_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="uniform_1" outlet="wave"/>
+               <dest obj="bipolar2unipolar_2" inlet="i"/>
+            </net>
+            <net>
+               <source obj="bipolar2unipolar_2" outlet="o"/>
+               <dest obj="*_2" inlet="a"/>
+            </net>
+            <net>
+               <source obj="samplehold_1" outlet="out"/>
+               <dest obj="lp1_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="square_1" outlet="wave"/>
+               <dest obj="dirac_1" inlet="trig"/>
+            </net>
+            <net>
+               <source obj="dirac_1" outlet="out"/>
+               <dest obj="inv_2" inlet="in"/>
+            </net>
+            <net>
+               <source obj="inv_2" outlet="out"/>
+               <dest obj="bipolar2unipolar_3" inlet="i"/>
+            </net>
+            <net>
+               <source obj="bipolar2unipolar_3" outlet="o"/>
+               <dest obj="samplehold_1" inlet="s_h"/>
+            </net>
+            <net>
+               <source obj="lp1_1" outlet="out"/>
+               <dest obj="lp1_2" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lp1_2" outlet="out"/>
+               <dest obj="lp1_3" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lp1_3" outlet="out"/>
+               <dest obj="lp1_4" inlet="in"/>
+            </net>
+            <net>
+               <source obj="*c_4" outlet="out"/>
+               <dest obj="square_1" inlet="pitch"/>
+               <dest obj="dial_2" inlet="in"/>
+            </net>
+            <net>
+               <source obj="*_2" outlet="result"/>
+               <dest obj="samplehold_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="*c_5" outlet="out"/>
+               <dest obj="*_2" inlet="b"/>
+            </net>
+            <net>
+               <source obj="*_1" outlet="result"/>
+               <dest obj="xfade_3" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="lp1_4" outlet="out"/>
+               <dest obj="xfade_3" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="xfade_3" outlet="o"/>
+               <dest obj="read_1" inlet="time"/>
+               <dest obj="read_2" inlet="time"/>
+            </net>
+            <net>
+               <source obj="lowpass_3" outlet="out"/>
+               <dest obj="xfade_3" inlet="c"/>
+            </net>
+            <net>
+               <source obj="random" outlet="inlet"/>
+               <dest obj="lowpass_3" inlet="in"/>
+            </net>
+            <net>
+               <source obj="vibrato_mult" outlet="out"/>
+               <dest obj="sine_2" inlet="freq"/>
+            </net>
+            <net>
+               <source obj="post_reverb" outlet="inlet"/>
+               <dest obj="inv_3" inlet="i"/>
+            </net>
+            <net>
+               <source obj="inv_3" outlet="o"/>
+               <dest obj="and_1" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="and_1" outlet="o"/>
+               <dest obj="vib out r" inlet="s"/>
+            </net>
+         </nets>
+         <settings>
+            <subpatchmode>no</subpatchmode>
+         </settings>
+         <notes><![CDATA[]]></notes>
+         <windowPos>
+            <x>224</x>
+            <y>183</y>
+            <width>1872</width>
+            <height>1073</height>
+         </windowPos>
+      </subpatch>
+   </patcher>
+   <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_2" x="28" y="266">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PA2"/>
+         <combo attributeName="mode" selection="pullup"/>
+      </attribs>
+   </obj>
+   <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_2" x="126" y="266">
+      <params>
+         <frac32.s.map name="freq" value="-19.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/&gt;" uuid="8112942c245dbc2edf7d7de122fe83b0dcd0a391" name="&gt;_2" x="224" y="266">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_6" x="294" y="266">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_2" x="224" y="322">
+      <params>
+         <frac32.u.map name="value" value="30.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="42" y="448" text="trails switch"/>
+   <patcher type="patch/patcher" uuid="5da04a9a-c4bf-4e13-bdf4-b3b167edebf2" name="reverb" x="742" y="448">
+      <params/>
+      <attribs/>
+      <subpatch appVersion="1.0.12">
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_1" x="756" y="14">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_2" x="322" y="28">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="IN L" x="0" y="42">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mux/mux 2" uuid="539c246f4c360ac476e128cfbfa84348fb7f7e73" name="mux_3" x="1050" y="42">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_3" x="1148" y="42">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/mix 1 sq" uuid="cf790039775b62697a4b34e7a5389a5a8cc36e30" name="mix_1" x="1274" y="42">
+            <params>
+               <frac32.u.map name="gain1" value="64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="OUT L" x="1456" y="42">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_4" x="756" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/mix 1 g" uuid="e6982841c1bf323ee2062a4b6cc2737adafbd668" name="rvb L mix" x="924" y="84">
+            <params>
+               <frac32.u.map name="gain1" value="64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_5" x="322" y="98">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet a" uuid="b577fe41e0a6bc7b5502ce33cb8a3129e2e28ee5" name="IN R" x="0" y="112">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mux/mux 2" uuid="539c246f4c360ac476e128cfbfa84348fb7f7e73" name="mux_1" x="98" y="112">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="vongon-lmnts/reverb" uuid="vongon-8027561C-A0B5-4DF8-A10E-3ED1274F2980" name="reverb_3" x="532" y="112">
+            <params>
+               <frac32.u.map name="amount" value="64.0"/>
+               <frac32.u.map name="time" value="0.0"/>
+               <frac32.u.map name="diffusion" value="0.0"/>
+               <frac32.u.map name="gain" value="19.0"/>
+               <frac32.u.map name="lowpass" value="6.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_6" x="1148" y="112">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/mix 1 sq" uuid="cf790039775b62697a4b34e7a5389a5a8cc36e30" name="mix_2" x="1274" y="168">
+            <params>
+               <frac32.u.map name="gain1" value="64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="OUT R" x="1456" y="168">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/mix 1 g" uuid="e6982841c1bf323ee2062a4b6cc2737adafbd668" name="rvb R mix" x="924" y="182">
+            <params>
+               <frac32.u.map name="gain1" value="64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_7" x="756" y="196">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="bypass" x="0" y="210">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_10" x="140" y="210">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_8" x="1148" y="224">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_9" x="756" y="252">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="mix/mix 2 g" uuid="221f038da51943034a75e442c90624fcebfe6112" name="rvb MONO mix" x="924" y="280">
+            <params>
+               <frac32.u.map name="gain1" value="64.0"/>
+               <frac32.u.map name="gain2" value="64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_7" x="84" y="294">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_11" x="140" y="294">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gain/vca" uuid="a9f2dcd18043e2f47364e45cb8814f63c2a37c0d" name="vca_10" x="1148" y="308">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="math/+" uuid="44553fdc8628c67ab535845ed1be304ad6c9553b" name="+_1" x="294" y="378">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gpio/in/analog" uuid="1c0c845ed2d7e06ae5f377ba13d9d09f4747ac87" name="reverb decay" x="0" y="392">
+            <params/>
+            <attribs>
+               <combo attributeName="channel" selection="PA4 (ADC1_IN4)"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="decay" x="126" y="392">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="logic/and 2" uuid="c67031682f552aa0a80b23377495c51ea28a8c9c" name="and_3" x="784" y="462">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_1" x="854" y="462">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_12" x="910" y="462">
+            <params>
+               <frac32.s.map name="freq" value="25.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="trails" x="644" y="476">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_2" x="728" y="476">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="math/*c" uuid="7d5ef61c3bcd571ee6bbd8437ef3612125dfb225" name="*c_6" x="0" y="490">
+            <params>
+               <frac32.u.map name="amp" value="10.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/+c" uuid="13eec32bd8ad57dd0bb18a02566cc0a117d320e3" name="diffusion_" x="98" y="490">
+            <params>
+               <frac32.u.map name="c" value="39.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <comment type="patch/comment" x="224" y="574" text="start muting at 50"/>
+         <obj type="gpio/in/analog" uuid="1c0c845ed2d7e06ae5f377ba13d9d09f4747ac87" name="reverb mix" x="0" y="588">
+            <params/>
+            <attribs>
+               <combo attributeName="channel" selection="PA5 (ADC1_IN5)"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_7" x="126" y="588">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/inv" uuid="565521d3699b36d8095aa1c79b9ad0046fb133ce" name="inv_3" x="224" y="588">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="math/+c" uuid="13eec32bd8ad57dd0bb18a02566cc0a117d320e3" name="+c_1" x="280" y="588">
+            <params>
+               <frac32.u.map name="c" value="64.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/gain" uuid="6b4dd3da49f98e54900f6c20031f38f4624fa364" name="gain_1" x="336" y="588">
+            <params>
+               <frac32.u.map name="amp" value="18.299999237060547"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="gpio/in/analog" uuid="1c0c845ed2d7e06ae5f377ba13d9d09f4747ac87" name="reverb lowpass" x="0" y="700">
+            <params/>
+            <attribs>
+               <combo attributeName="channel" selection="PA1 (ADC1_IN1)"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_8" x="126" y="700">
+            <params>
+               <frac32.s.map name="freq" value="-16.5"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet b" uuid="3b0d3eacb5bb978cb05d1372aa2714d5a4790844" name="mono_in" x="0" y="812">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="lmnts LOUT" x="1078" y="826">
+            <params/>
+            <attribs/>
+         </obj>
+         <comment type="patch/comment" x="0" y="854" text="mono out - always false, mono sum sounds phasery"/>
+         <obj type="const/i" uuid="e202f44b2df17ae0b3e663b98ea6b14c8ff00408" name="i_1" x="0" y="868">
+            <params/>
+            <attribs>
+               <spinner attributeName="value" value="0"/>
+            </attribs>
+         </obj>
+         <obj type="patch/outlet a" uuid="abd8c5fd3b0524a6630f65cad6dc27f6c58e2a3e" name="lmnts ROUT" x="1078" y="868">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="patch/inlet f" uuid="5c585d2dcd9c05631e345ac09626a22a639d7c13" name="lmnts decay adjust" x="616" y="910">
+            <params/>
+            <attribs/>
+         </obj>
+         <nets>
+            <net>
+               <source obj="reverb decay" outlet="out"/>
+               <dest obj="decay" inlet="in"/>
+            </net>
+            <net>
+               <source obj="decay" outlet="out"/>
+               <dest obj="*c_6" inlet="in"/>
+               <dest obj="+_1" inlet="in1"/>
+            </net>
+            <net>
+               <source obj="reverb mix" outlet="out"/>
+               <dest obj="lowpass_7" inlet="in"/>
+            </net>
+            <net>
+               <source obj="*c_6" outlet="out"/>
+               <dest obj="diffusion_" inlet="in"/>
+            </net>
+            <net>
+               <source obj="vca_4" outlet="o"/>
+               <dest obj="rvb MONO mix" inlet="in1"/>
+               <dest obj="rvb L mix" inlet="in1"/>
+            </net>
+            <net>
+               <source obj="vca_9" outlet="o"/>
+               <dest obj="rvb R mix" inlet="in1"/>
+               <dest obj="rvb MONO mix" inlet="in2"/>
+            </net>
+            <net>
+               <source obj="lowpass_7" outlet="out"/>
+               <dest obj="inv_3" inlet="in"/>
+               <dest obj="vca_4" inlet="v"/>
+               <dest obj="vca_9" inlet="v"/>
+            </net>
+            <net>
+               <source obj="lowpass_10" outlet="out"/>
+               <dest obj="vca_2" inlet="v"/>
+               <dest obj="vca_5" inlet="v"/>
+            </net>
+            <net>
+               <source obj="vca_2" outlet="o"/>
+               <dest obj="vca_1" inlet="a"/>
+               <dest obj="reverb_3" inlet="l"/>
+            </net>
+            <net>
+               <source obj="vca_5" outlet="o"/>
+               <dest obj="reverb_3" inlet="r"/>
+               <dest obj="vca_7" inlet="a"/>
+            </net>
+            <net>
+               <source obj="reverb_3" outlet="l"/>
+               <dest obj="vca_4" inlet="a"/>
+               <dest obj="lmnts LOUT" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="reverb_3" outlet="r"/>
+               <dest obj="vca_9" inlet="a"/>
+               <dest obj="lmnts ROUT" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="inv_7" outlet="o"/>
+               <dest obj="lowpass_11" inlet="in"/>
+               <dest obj="and_3" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="IN L" outlet="inlet"/>
+               <dest obj="mux_1" inlet="i2"/>
+               <dest obj="vca_2" inlet="a"/>
+               <dest obj="vca_6" inlet="a"/>
+            </net>
+            <net>
+               <source obj="mux_1" outlet="o"/>
+               <dest obj="vca_5" inlet="a"/>
+               <dest obj="vca_10" inlet="a"/>
+            </net>
+            <net>
+               <source obj="lowpass_11" outlet="out"/>
+               <dest obj="vca_6" inlet="v"/>
+               <dest obj="vca_10" inlet="v"/>
+            </net>
+            <net>
+               <source obj="rvb L mix" outlet="out"/>
+               <dest obj="mux_3" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="rvb MONO mix" outlet="out"/>
+               <dest obj="mux_3" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="mux_3" outlet="o"/>
+               <dest obj="vca_3" inlet="a"/>
+            </net>
+            <net>
+               <source obj="rvb R mix" outlet="out"/>
+               <dest obj="vca_8" inlet="a"/>
+            </net>
+            <net>
+               <source obj="vca_3" outlet="o"/>
+               <dest obj="mix_1" inlet="bus_in"/>
+            </net>
+            <net>
+               <source obj="vca_6" outlet="o"/>
+               <dest obj="mix_1" inlet="in1"/>
+            </net>
+            <net>
+               <source obj="vca_8" outlet="o"/>
+               <dest obj="mix_2" inlet="bus_in"/>
+            </net>
+            <net>
+               <source obj="vca_10" outlet="o"/>
+               <dest obj="mix_2" inlet="in1"/>
+            </net>
+            <net>
+               <source obj="and_3" outlet="o"/>
+               <dest obj="inv_1" inlet="i"/>
+            </net>
+            <net>
+               <source obj="inv_1" outlet="o"/>
+               <dest obj="lowpass_12" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lowpass_12" outlet="out"/>
+               <dest obj="vca_3" inlet="v"/>
+               <dest obj="vca_8" inlet="v"/>
+            </net>
+            <net>
+               <source obj="trails" outlet="inlet"/>
+               <dest obj="inv_2" inlet="i"/>
+            </net>
+            <net>
+               <source obj="mix_1" outlet="out"/>
+               <dest obj="OUT L" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="mix_2" outlet="out"/>
+               <dest obj="OUT R" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="inv_2" outlet="o"/>
+               <dest obj="and_3" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="IN R" outlet="inlet"/>
+               <dest obj="mux_1" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="mono_in" outlet="inlet"/>
+               <dest obj="mux_1" inlet="s"/>
+            </net>
+            <net>
+               <source obj="bypass" outlet="inlet"/>
+               <dest obj="lowpass_10" inlet="in"/>
+               <dest obj="inv_7" inlet="i"/>
+            </net>
+            <net>
+               <source obj="reverb lowpass" outlet="out"/>
+               <dest obj="lowpass_8" inlet="in"/>
+            </net>
+            <net>
+               <source obj="lowpass_8" outlet="out"/>
+               <dest obj="reverb_3" inlet="lowpass"/>
+            </net>
+            <net>
+               <source obj="diffusion_" outlet="out"/>
+               <dest obj="reverb_3" inlet="diffusion"/>
+            </net>
+            <net>
+               <source obj="i_1" outlet="out"/>
+               <dest obj="mux_3" inlet="s"/>
+            </net>
+            <net>
+               <source obj="vca_1" outlet="o"/>
+               <dest obj="rvb L mix" inlet="bus_in"/>
+               <dest obj="rvb MONO mix" inlet="bus_in"/>
+            </net>
+            <net>
+               <source obj="vca_7" outlet="o"/>
+               <dest obj="rvb R mix" inlet="bus_in"/>
+            </net>
+            <net>
+               <source obj="inv_3" outlet="out"/>
+               <dest obj="+c_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="+c_1" outlet="out"/>
+               <dest obj="gain_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="gain_1" outlet="out"/>
+               <dest obj="vca_1" inlet="v"/>
+               <dest obj="vca_7" inlet="v"/>
+            </net>
+            <net>
+               <source obj="+_1" outlet="out"/>
+               <dest obj="reverb_3" inlet="time"/>
+            </net>
+            <net>
+               <source obj="lmnts decay adjust" outlet="inlet"/>
+               <dest obj="+_1" inlet="in2"/>
+            </net>
+         </nets>
+         <settings>
+            <subpatchmode>no</subpatchmode>
+         </settings>
+         <notes><![CDATA[]]></notes>
+         <windowPos>
+            <x>0</x>
+            <y>23</y>
+            <width>1981</width>
+            <height>1417</height>
+         </windowPos>
+      </subpatch>
+   </patcher>
+   <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_1" x="42" y="462">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PA3"/>
+         <combo attributeName="mode" selection="pullup"/>
+      </attribs>
+   </obj>
+   <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_3" x="126" y="462">
+      <params>
+         <frac32.s.map name="freq" value="2.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/&gt;" uuid="8112942c245dbc2edf7d7de122fe83b0dcd0a391" name="&gt;_3" x="224" y="462">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_7" x="322" y="462">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_5" x="420" y="462">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="mix/mix 1 g" uuid="e6982841c1bf323ee2062a4b6cc2737adafbd668" name="mix_1" x="952" y="476">
+      <params>
+         <frac32.u.map name="gain1" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_3" x="224" y="518">
+      <params>
+         <frac32.u.map name="value" value="30.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="gpio/i2c/config" uuid="b095a33e56de5fcd23740a7d983bc0bafb315d81" name="config_1" x="28" y="672">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="env/follower" uuid="356ce1d18ac6b51704833f94dac5dea823fb8223" name="follower_1" x="868" y="686">
+      <params/>
+      <attribs>
+         <combo attributeName="time" selection="5.3ms"/>
+      </attribs>
+   </obj>
+   <obj type="dyn/comp" uuid="2d62720d6a597c586936be74ebb1e1c449772636" name="comp_1" x="966" y="686">
+      <params>
+         <frac32.u.map name="tresh" value="18.0"/>
+         <frac32.u.map name="ratio" value="16.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/smooth2" uuid="9ba3ddec912512e6b63211080e89cb25b6d84834" name="smooth2_1" x="1050" y="686">
+      <params>
+         <frac32.u.map name="risetime" value="59.0"/>
+         <frac32.u.map name="falltime" value="0.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/-c" uuid="bc70bed87e5405985ade03f4806b9450609a9093" name="-c_1" x="1148" y="686">
+      <params>
+         <frac32.u.map name="c" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <patcher type="patch/patcher" uuid="3159765e-d72f-42e0-b208-350fc3fcdff2" name="Reverb Toggle" x="28" y="728">
+      <params/>
+      <attribs/>
+      <subpatch appVersion="1.0.12">
+         <comment type="patch/comment" x="28" y="56" text="Reverb Bypass"/>
+         <obj type="patch/outlet b" uuid="191792f616d4835dba0b55375474a12942e5bcbd" name="status" x="574" y="56">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_3" x="28" y="70">
+            <params/>
+            <attribs>
+               <combo attributeName="pad" selection="PC5"/>
+               <combo attributeName="mode" selection="pullup"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_1" x="112" y="70">
+            <params>
+               <frac32.s.map name="freq" value="0.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/&gt;" uuid="8112942c245dbc2edf7d7de122fe83b0dcd0a391" name="&gt;_1" x="210" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_2" x="294" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/and 2" uuid="c67031682f552aa0a80b23377495c51ea28a8c9c" name="and_1" x="378" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <patchobj type="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad" name="eeprom" x="448" y="70">
+            <params/>
+            <attribs>
+               <text attributeName="script">
+                  <sText><![CDATA[uint8_t DEVICE_ADDRESS = 0xA0;
+uint8_t MEMORY_ADDRESS = 0;
+bool state = false;
+bool readyToUpdate = true;
+
+void writeEeprom(uint8_t address, uint8_t data){
+	static uint8_t txbuf[2] __attribute__ ((section(".sram2")));
+	msg_t status;
+	txbuf[0] = address;
+	txbuf[1] = data;
+	i2cAcquireBus(&I2CD1);
+	status = i2cMasterTransmitTimeout(&I2CD1, (DEVICE_ADDRESS >> 1), txbuf, 2, NULL, 0, MS2ST(4));
+	i2cReleaseBus(&I2CD1);
+	chThdSleepMilliseconds(1);
+}
+
+uint8_t readEeprom(uint8_t address){
+	static uint8_t txbuf[2] __attribute__ ((section(".sram2")));
+	static uint8_t rxbuf[2] __attribute__ ((section(".sram2")));
+	msg_t status;
+	txbuf[0] = address;
+	i2cAcquireBus(&I2CD1);
+	status = i2cMasterTransmitTimeout(&I2CD1, (DEVICE_ADDRESS >> 1), txbuf, 1, rxbuf, 2, MS2ST(4));
+	i2cReleaseBus(&I2CD1);
+	chThdSleepMilliseconds(1);
+	return rxbuf[0];
+}
+
+
+void setup(void){
+	chThdSleepMilliseconds(10);
+	state = readEeprom(MEMORY_ADDRESS);
+	out1 = state;
+}
+
+
+void loop(void){
+	if(pulse && readyToUpdate){
+		state = !state;
+		writeEeprom(MEMORY_ADDRESS, state);
+		readyToUpdate = false;
+		//comment out bc we don't need to reread, this is useful for testing
+		//chThdSleepMilliseconds(10);
+		//state = readEeprom(MEMORY_ADDRESS);
+	}
+	else if(pulse){
+		out1 = state;
+	} 
+	else {
+		readyToUpdate = true;
+		out1 = state;
+	}
+}]]></sText>
+               </text>
+            </attribs>
+            <object id="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad">
+               <sDescription>script with 2 inputs and 2 outputs, running in a separate thread, you must define &quot;void setup(void){}&quot; and &quot;void loop(void)&quot;</sDescription>
+               <author>Johannes Taelman</author>
+               <license>BSD</license>
+               <helpPatch>script.axh</helpPatch>
+               <inlets>
+                  <bool32 name="pulse_"/>
+               </inlets>
+               <outlets>
+                  <int32 name="out1_"/>
+               </outlets>
+               <displays/>
+               <params/>
+               <attribs>
+                  <text name="script"/>
+               </attribs>
+               <includes/>
+               <code.declaration><![CDATA[int32_t in1,in2,rin;
+bool pulse;
+int32_t out1,out2;
+attr_script
+msg_t ThreadX2(){
+  setup();
+  while(!chThdShouldTerminate()){
+     loop();
+     chThdSleepMilliseconds(1);
+  }
+  chThdExit((msg_t)0);
+}
+static msg_t ThreadX(void *arg) {
+((attr_parent *)arg)->ThreadX2();
+}
+WORKING_AREA(waThreadX, 1024);
+Thread *Thd;]]></code.declaration>
+               <code.init><![CDATA[in1=0;in2=0;out1=0;out2=0;rin=0;pulse=false;
+Thd = chThdCreateStatic(waThreadX, sizeof(waThreadX), NORMALPRIO, ThreadX, (void *)this);]]></code.init>
+               <code.dispose><![CDATA[chThdTerminate(Thd);
+chThdWait(Thd);]]></code.dispose>
+               <code.krate><![CDATA[this->pulse = inlet_pulse__;
+outlet_out1__ = this->out1;]]></code.krate>
+            </object>
+         </patchobj>
+         <obj type="gpio/out/digital" uuid="320eed040f6c55bb24c56416596ac2e67d0c82bc" name="digital_4" x="574" y="98">
+            <params/>
+            <attribs>
+               <combo attributeName="pad" selection="PB1"/>
+               <combo attributeName="mode" selection="Push pull"/>
+            </attribs>
+         </obj>
+         <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_1" x="140" y="154">
+            <params>
+               <frac32.u.map name="value" value="30.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="const/i" uuid="e202f44b2df17ae0b3e663b98ea6b14c8ff00408" name="i_1" x="28" y="252">
+            <params/>
+            <attribs>
+               <spinner attributeName="value" value="1"/>
+            </attribs>
+         </obj>
+         <obj type="timer/delayedpulse" uuid="3f05ee534ca67755fb20c7437f9e4de3d4c2f73d" name="delayedpulse_1" x="112" y="252">
+            <params>
+               <frac32.s.map name="delay" value="13.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="logic/toggle" uuid="f42f0d3aab552c17bc78b9e65f85dc24f977503d" name="toggle_3" x="224" y="252">
+            <params/>
+            <attribs/>
+         </obj>
+         <nets>
+            <net>
+               <source obj="lowpass_1" outlet="out"/>
+               <dest obj="&gt;_1" inlet="in1"/>
+            </net>
+            <net>
+               <source obj="dial_1" outlet="out"/>
+               <dest obj="&gt;_1" inlet="in2"/>
+            </net>
+            <net>
+               <source obj="digital_3" outlet="out"/>
+               <dest obj="lowpass_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="&gt;_1" outlet="out"/>
+               <dest obj="inv_2" inlet="i"/>
+            </net>
+            <net>
+               <source obj="inv_2" outlet="o"/>
+               <dest obj="and_1" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="eeprom" outlet="out1_"/>
+               <dest obj="digital_4" inlet="in"/>
+               <dest obj="status" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="delayedpulse_1" outlet="pulse"/>
+               <dest obj="toggle_3" inlet="trig"/>
+            </net>
+            <net>
+               <source obj="toggle_3" outlet="o"/>
+               <dest obj="and_1" inlet="i2"/>
+            </net>
+            <net>
+               <source obj="i_1" outlet="out"/>
+               <dest obj="delayedpulse_1" inlet="trig"/>
+            </net>
+            <net>
+               <source obj="and_1" outlet="o"/>
+               <dest obj="eeprom" inlet="pulse_"/>
+            </net>
+         </nets>
+         <settings>
+            <subpatchmode>no</subpatchmode>
+         </settings>
+         <notes><![CDATA[]]></notes>
+         <windowPos>
+            <x>29</x>
+            <y>731</y>
+            <width>944</width>
+            <height>667</height>
+         </windowPos>
+      </subpatch>
+   </patcher>
+   <obj type="disp/bool" uuid="a0ee71d48208b71752cbb8c05e55145106ef3946" name="bool_3" x="112" y="728">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_1" x="224" y="742">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/and 2" uuid="c67031682f552aa0a80b23377495c51ea28a8c9c" name="and_1" x="294" y="742">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/and 2" uuid="c67031682f552aa0a80b23377495c51ea28a8c9c" name="and_2" x="378" y="742">
+      <params/>
+      <attribs/>
+   </obj>
+   <patchobj type="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad" name="bypass-stereo" x="462" y="742">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[bool bypass_state;
+bool bypass_input;
+bool mono_state;
+bool mono_input;
+uint16_t ADAU1961_REG_R22_PMIXL0;
+uint16_t ADAU1961_REG_R23_PMIXL1;
+uint16_t ADAU1961_REG_R24_PMIXR0;
+uint16_t ADAU1961_REG_R25_PMIXR1;
+uint16_t ADAU1961_REG_R31_PLLVOL;
+uint16_t ADAU1961_REG_R32_PLRVOL;
+uint16_t ADAU1961_REG_R8_LDIVOL;
+uint16_t ADAU1961_REG_R9_RDIVOL;
+uint16_t ADAU1961_REG_R26_PLRML;
+uint16_t ADAU1961_REG_R27_PLRMR;
+uint16_t ADAU1961_REG_R19_ADCC;
+uint16_t ADAU1961_REG_R17_CON0;
+
+
+void setup(void){
+  bypass_state = false;
+  bypass_input = false;
+  mono_state = false;
+  mono_input = false;
+  ADAU1961_REG_R22_PMIXL0 = 0x401C;
+  ADAU1961_REG_R23_PMIXL1 = 0x401D;
+  ADAU1961_REG_R24_PMIXR0 = 0x401E;
+  ADAU1961_REG_R25_PMIXR1 = 0x401F;
+  ADAU1961_REG_R31_PLLVOL = 0x4025;
+  ADAU1961_REG_R32_PLRVOL = 0x4026;
+  ADAU1961_REG_R8_LDIVOL = 0x400E;
+  ADAU1961_REG_R9_RDIVOL = 0x400F;
+  ADAU1961_REG_R26_PLRML = 0x4020;
+  ADAU1961_REG_R27_PLRMR = 0x4021;
+  ADAU1961_REG_R19_ADCC = 0x4019;
+  ADAU1961_REG_R17_CON0 = 0x0417;
+}
+
+
+uint16_t getOutputLevel(){
+  if(bypass_state) return 57; //analog output level
+  else return 58; //digital output level
+}
+
+uint16_t getInputLevelAnalog(){
+  return 16;
+}
+
+uint16_t getInputLevelDigital(){
+  return 16;
+}
+
+void muteOutput(){
+  ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL,(0<<2)+2);
+  ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL,(0<<2)+2);
+}
+
+void unmuteOutput(){
+  ADAU1961_WriteRegister(ADAU1961_REG_R31_PLLVOL,(getOutputLevel()<<2)+2);
+  ADAU1961_WriteRegister(ADAU1961_REG_R32_PLRVOL,(getOutputLevel()<<2)+2);
+}
+
+void stereoRouting() {
+  ADAU1961_WriteRegister(ADAU1961_REG_R26_PLRML, (1<<1)+1);
+  ADAU1961_WriteRegister(ADAU1961_REG_R27_PLRMR, (1<<3)+1);
+}
+
+void monoRouting() {
+  ADAU1961_WriteRegister(ADAU1961_REG_R26_PLRML, (1<<1)+1);
+  ADAU1961_WriteRegister(ADAU1961_REG_R27_PLRMR, (1<<1)+1);
+}
+
+void turnOnAnalogPath() {
+    ADAU1961_WriteRegister(ADAU1961_REG_R22_PMIXL0, 0x01); // mute DAC
+    ADAU1961_WriteRegister(ADAU1961_REG_R24_PMIXR0, 0x01); // mute DAC
+    ADAU1961_WriteRegister(ADAU1961_REG_R23_PMIXL1, 0x06); // unmute Left Record Mixer
+    ADAU1961_WriteRegister(ADAU1961_REG_R25_PMIXR1, 0x60); // unmute Right Record Mixer
+    ADAU1961_WriteRegister(ADAU1961_REG_R8_LDIVOL, (getInputLevelAnalog()<<2)+3);
+    ADAU1961_WriteRegister(ADAU1961_REG_R9_RDIVOL, (getInputLevelAnalog()<<2)+3);
+}
+
+void turnOnDigitalPath() {
+    ADAU1961_WriteRegister(ADAU1961_REG_R23_PMIXL1, 0x00); // mute Left Record Mixer
+    ADAU1961_WriteRegister(ADAU1961_REG_R25_PMIXR1, 0x00); // mute Right Record Mixer
+    ADAU1961_WriteRegister(ADAU1961_REG_R22_PMIXL0, 0x21); // unmute DAC
+    ADAU1961_WriteRegister(ADAU1961_REG_R24_PMIXR0, 0x41); // unmute DAC
+    ADAU1961_WriteRegister(ADAU1961_REG_R8_LDIVOL, (getInputLevelDigital()<<2)+3);
+    ADAU1961_WriteRegister(ADAU1961_REG_R9_RDIVOL, (getInputLevelDigital()<<2)+3);
+}
+
+void loop(void){
+
+  //if(true) return; // dev mode
+
+  if(bypass){
+    bypass_input = true;
+    out1=true;
+  } else {
+    bypass_input = false;
+    out1=false;
+  }
+  
+  if(rin > 0) {
+    mono_input = false;
+  } else {
+    mono_input = true;
+  }
+  
+
+  
+  if(mono_input && !mono_state && bypass_state) {
+    mono_state = true;
+    muteOutput();
+    monoRouting();
+    unmuteOutput();
+  } else if (!mono_input && mono_state && bypass_state) {
+    mono_state = false;
+    muteOutput();
+    stereoRouting();
+    unmuteOutput();
+  }
+  
+  if(bypass_input && !bypass_state) {
+    bypass_state = true;
+    muteOutput();
+    turnOnAnalogPath();
+    unmuteOutput();
+  } else if (!bypass_input && bypass_state) {
+    bypass_state = false;
+    muteOutput();
+    stereoRouting();
+    turnOnDigitalPath();
+    mono_state = false;
+    unmuteOutput();
+  }
+}]]></sText>
+         </text>
+      </attribs>
+      <object id="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad">
+         <sDescription>script with 2 inputs and 2 outputs, running in a separate thread, you must define &quot;void setup(void){}&quot; and &quot;void loop(void)&quot;</sDescription>
+         <author>Johannes Taelman</author>
+         <license>BSD</license>
+         <helpPatch>script.axh</helpPatch>
+         <inlets>
+            <bool32 name="bypass_"/>
+            <bool32 name="rin_" description="rin"/>
+         </inlets>
+         <outlets>
+            <bool32 name="out1_"/>
+         </outlets>
+         <displays/>
+         <params/>
+         <attribs>
+            <text name="script"/>
+         </attribs>
+         <includes/>
+         <code.declaration><![CDATA[int32_t in1,in2,rin;
+bool bypass;
+int32_t out1,out2;
+attr_script
+msg_t ThreadX2(){
+  setup();
+  while(!chThdShouldTerminate()){
+     loop();
+     chThdSleepMilliseconds(1);
+  }
+  chThdExit((msg_t)0);
+}
+static msg_t ThreadX(void *arg) {
+((attr_parent *)arg)->ThreadX2();
+}
+WORKING_AREA(waThreadX, 1024);
+Thread *Thd;]]></code.declaration>
+         <code.init><![CDATA[in1=0;in2=0;out1=0;out2=0;rin=0;bypass=false;
+  Thd = chThdCreateStatic(waThreadX, sizeof(waThreadX),
+                    NORMALPRIO, ThreadX, (void *)this);]]></code.init>
+         <code.dispose><![CDATA[chThdTerminate(Thd);
+chThdWait(Thd);]]></code.dispose>
+         <code.krate><![CDATA[this->bypass = inlet_bypass__;
+this->rin = inlet_rin__;
+outlet_out1__ = this->out1;]]></code.krate>
+      </object>
+   </patchobj>
+   <obj type="disp/dial p" uuid="44fd18b562e434b3230441681132dbeabb15cdc5" name="dial_6" x="868" y="756">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_2" x="224" y="784">
+      <params/>
+      <attribs/>
+   </obj>
+   <patcher type="patch/patcher" uuid="a5fcf1be-c696-4c94-9d4b-752c71b5b4fc" name="Vibrato Toggle" x="28" y="826">
+      <params/>
+      <attribs/>
+      <subpatch appVersion="1.0.12">
+         <comment type="patch/comment" x="28" y="56" text="Vibrato Bypass"/>
+         <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_3" x="28" y="70">
+            <params/>
+            <attribs>
+               <combo attributeName="pad" selection="PC4"/>
+               <combo attributeName="mode" selection="pullup"/>
+            </attribs>
+         </obj>
+         <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_1" x="126" y="70">
+            <params>
+               <frac32.s.map name="freq" value="0.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="math/&gt;" uuid="8112942c245dbc2edf7d7de122fe83b0dcd0a391" name="&gt;_1" x="224" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_2" x="308" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="logic/and 2" uuid="c67031682f552aa0a80b23377495c51ea28a8c9c" name="and_1" x="392" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <patchobj type="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad" name="eeprom" x="462" y="70">
+            <params/>
+            <attribs>
+               <text attributeName="script">
+                  <sText><![CDATA[uint8_t DEVICE_ADDRESS = 0xA0;
+uint8_t MEMORY_ADDRESS = 2;
+bool state = false;
+bool readyToUpdate = true;
+
+void writeEeprom(uint8_t address, uint8_t data){
+	static uint8_t txbuf[2] __attribute__ ((section(".sram2")));
+	msg_t status;
+	txbuf[0] = address;
+	txbuf[1] = data;
+	i2cAcquireBus(&I2CD1);
+	status = i2cMasterTransmitTimeout(&I2CD1, (DEVICE_ADDRESS >> 1), txbuf, 2, NULL, 0, MS2ST(4));
+	i2cReleaseBus(&I2CD1);
+	chThdSleepMilliseconds(1);
+}
+
+uint8_t readEeprom(uint8_t address){
+	static uint8_t txbuf[2] __attribute__ ((section(".sram2")));
+	static uint8_t rxbuf[2] __attribute__ ((section(".sram2")));
+	msg_t status;
+	txbuf[0] = address;
+	i2cAcquireBus(&I2CD1);
+	status = i2cMasterTransmitTimeout(&I2CD1, (DEVICE_ADDRESS >> 1), txbuf, 1, rxbuf, 2, MS2ST(4));
+	i2cReleaseBus(&I2CD1);
+	chThdSleepMilliseconds(1);
+	return rxbuf[0];
+}
+
+
+void setup(void){
+	chThdSleepMilliseconds(10);
+	state = readEeprom(MEMORY_ADDRESS);
+	out1 = state;
+}
+
+
+void loop(void){
+	if(pulse && readyToUpdate){
+		state = !state;
+		writeEeprom(MEMORY_ADDRESS, state);
+		readyToUpdate = false;
+		//comment out bc we don't need to reread, this is useful for testing
+		//chThdSleepMilliseconds(10);
+		//state = readEeprom(MEMORY_ADDRESS);
+	}
+	else if(pulse){
+		out1 = state;
+	} 
+	else {
+		readyToUpdate = true;
+		out1 = state;
+	}
+}]]></sText>
+               </text>
+            </attribs>
+            <object id="patch/object" uuid="00620061-ad8e-4202-95b2-7b16a403f0ad">
+               <sDescription>script with 2 inputs and 2 outputs, running in a separate thread, you must define &quot;void setup(void){}&quot; and &quot;void loop(void)&quot;</sDescription>
+               <author>Johannes Taelman</author>
+               <license>BSD</license>
+               <helpPatch>script.axh</helpPatch>
+               <inlets>
+                  <bool32 name="pulse_"/>
+               </inlets>
+               <outlets>
+                  <int32 name="out1_"/>
+               </outlets>
+               <displays/>
+               <params/>
+               <attribs>
+                  <text name="script"/>
+               </attribs>
+               <includes/>
+               <code.declaration><![CDATA[int32_t in1,in2,rin;
+bool pulse;
+int32_t out1,out2;
+attr_script
+msg_t ThreadX2(){
+  setup();
+  while(!chThdShouldTerminate()){
+     loop();
+     chThdSleepMilliseconds(1);
+  }
+  chThdExit((msg_t)0);
+}
+static msg_t ThreadX(void *arg) {
+((attr_parent *)arg)->ThreadX2();
+}
+WORKING_AREA(waThreadX, 1024);
+Thread *Thd;]]></code.declaration>
+               <code.init><![CDATA[in1=0;in2=0;out1=0;out2=0;rin=0;pulse=false;
+Thd = chThdCreateStatic(waThreadX, sizeof(waThreadX), NORMALPRIO, ThreadX, (void *)this);]]></code.init>
+               <code.dispose><![CDATA[chThdTerminate(Thd);
+chThdWait(Thd);]]></code.dispose>
+               <code.krate><![CDATA[this->pulse = inlet_pulse__;
+outlet_out1__ = this->out1;]]></code.krate>
+            </object>
+         </patchobj>
+         <obj type="patch/outlet b" uuid="191792f616d4835dba0b55375474a12942e5bcbd" name="status" x="588" y="70">
+            <params/>
+            <attribs/>
+         </obj>
+         <obj type="gpio/out/digital" uuid="320eed040f6c55bb24c56416596ac2e67d0c82bc" name="digital_5" x="588" y="112">
+            <params/>
+            <attribs>
+               <combo attributeName="pad" selection="PB0"/>
+               <combo attributeName="mode" selection="Push pull"/>
+            </attribs>
+         </obj>
+         <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_1" x="154" y="154">
+            <params>
+               <frac32.u.map name="value" value="30.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="const/i" uuid="e202f44b2df17ae0b3e663b98ea6b14c8ff00408" name="i_1" x="70" y="266">
+            <params/>
+            <attribs>
+               <spinner attributeName="value" value="1"/>
+            </attribs>
+         </obj>
+         <obj type="timer/delayedpulse" uuid="3f05ee534ca67755fb20c7437f9e4de3d4c2f73d" name="delayedpulse_1" x="154" y="266">
+            <params>
+               <frac32.s.map name="delay" value="13.0"/>
+            </params>
+            <attribs/>
+         </obj>
+         <obj type="logic/toggle" uuid="f42f0d3aab552c17bc78b9e65f85dc24f977503d" name="toggle_3" x="266" y="266">
+            <params/>
+            <attribs/>
+         </obj>
+         <nets>
+            <net>
+               <source obj="digital_3" outlet="out"/>
+               <dest obj="lowpass_1" inlet="in"/>
+            </net>
+            <net>
+               <source obj="eeprom" outlet="out1_"/>
+               <dest obj="digital_5" inlet="in"/>
+               <dest obj="status" inlet="outlet"/>
+            </net>
+            <net>
+               <source obj="lowpass_1" outlet="out"/>
+               <dest obj="&gt;_1" inlet="in1"/>
+            </net>
+            <net>
+               <source obj="dial_1" outlet="out"/>
+               <dest obj="&gt;_1" inlet="in2"/>
+            </net>
+            <net>
+               <source obj="&gt;_1" outlet="out"/>
+               <dest obj="inv_2" inlet="i"/>
+            </net>
+            <net>
+               <source obj="and_1" outlet="o"/>
+               <dest obj="eeprom" inlet="pulse_"/>
+            </net>
+            <net>
+               <source obj="delayedpulse_1" outlet="pulse"/>
+               <dest obj="toggle_3" inlet="trig"/>
+            </net>
+            <net>
+               <source obj="i_1" outlet="out"/>
+               <dest obj="delayedpulse_1" inlet="trig"/>
+            </net>
+            <net>
+               <source obj="inv_2" outlet="o"/>
+               <dest obj="and_1" inlet="i1"/>
+            </net>
+            <net>
+               <source obj="toggle_3" outlet="o"/>
+               <dest obj="and_1" inlet="i2"/>
+            </net>
+         </nets>
+         <settings>
+            <subpatchmode>no</subpatchmode>
+         </settings>
+         <notes><![CDATA[]]></notes>
+         <windowPos>
+            <x>14</x>
+            <y>134</y>
+            <width>957</width>
+            <height>590</height>
+         </windowPos>
+      </subpatch>
+   </patcher>
+   <obj type="disp/bool" uuid="a0ee71d48208b71752cbb8c05e55145106ef3946" name="bool_4" x="112" y="826">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="disp/dial b" uuid="9ffed04e6a3052d9001eda83bae7024cb6d17037" name="dial_8" x="1330" y="826">
+      <params/>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="462" y="840" text="if bypass is true -&gt; bypass ADC/DAC"/>
+   <comment type="patch/comment" x="462" y="854" text="if rin is true -&gt; stereo routing"/>
+   <obj type="disp/chart p" uuid="58f42040a894006a5f73ed8cb8d0bd45481b28cd" name="chart_1" x="980" y="854">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_5" x="854" y="924">
+      <params>
+         <frac32.u.map name="value" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="disp/dial p" uuid="44fd18b562e434b3230441681132dbeabb15cdc5" name="dial_7" x="980" y="980">
+      <params/>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="28" y="1008" text="RIN"/>
+   <obj type="gpio/in/digital" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_4" x="28" y="1022">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PB7"/>
+         <combo attributeName="mode" selection="pullup"/>
+      </attribs>
+   </obj>
+   <obj type="kfilter/lowpass" uuid="4f0d68b39b6f6b1c1d371b028d84391d14062d68" name="lowpass_4" x="112" y="1022">
+      <params>
+         <frac32.s.map name="freq" value="2.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/&gt;" uuid="8112942c245dbc2edf7d7de122fe83b0dcd0a391" name="&gt;_4" x="210" y="1022">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_9" x="322" y="1022">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="logic/inv" uuid="2bd44b865d3b63ff9b80862242bf5be779e3ad5" name="inv_3" x="378" y="1022">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_4" x="210" y="1078">
+      <params>
+         <frac32.u.map name="value" value="30.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="Reverb Toggle" outlet="status"/>
+         <dest obj="bool_3" inlet="in"/>
+         <dest obj="inv_1" inlet="i"/>
+         <dest obj="reverb" inlet="bypass"/>
+      </net>
+      <net>
+         <source obj="Vibrato Toggle" outlet="status"/>
+         <dest obj="bool_4" inlet="in"/>
+         <dest obj="inv_2" inlet="i"/>
+         <dest obj="Vibrato" inlet="bypass"/>
+      </net>
+      <net>
+         <source obj="and_1" outlet="o"/>
+         <dest obj="and_2" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="and_2" outlet="o"/>
+         <dest obj="bypass-stereo" inlet="bypass_"/>
+      </net>
+      <net>
+         <source obj="inv_7" outlet="o"/>
+         <dest obj="inv_5" inlet="i"/>
+         <dest obj="and_2" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="inv_1" outlet="o"/>
+         <dest obj="and_1" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="inv_2" outlet="o"/>
+         <dest obj="and_1" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="inv_3" outlet="o"/>
+         <dest obj="reverb" inlet="mono_in"/>
+         <dest obj="Vibrato" inlet="mono_in"/>
+      </net>
+      <net>
+         <source obj="router" outlet="A-SEND L"/>
+         <dest obj="Vibrato" inlet="INL"/>
+      </net>
+      <net>
+         <source obj="Vibrato" outlet="OUTL"/>
+         <dest obj="router" inlet="A-RTN L"/>
+      </net>
+      <net>
+         <source obj="router" outlet="A-SEND R"/>
+         <dest obj="Vibrato" inlet="INR"/>
+      </net>
+      <net>
+         <source obj="Vibrato" outlet="OUTR"/>
+         <dest obj="router" inlet="A-RTN R"/>
+      </net>
+      <net>
+         <source obj="reverb" outlet="OUT L"/>
+         <dest obj="router" inlet="B-RTN L"/>
+      </net>
+      <net>
+         <source obj="reverb" outlet="OUT R"/>
+         <dest obj="router" inlet="B-RTN R"/>
+      </net>
+      <net>
+         <source obj="router" outlet="B-SEND L"/>
+         <dest obj="reverb" inlet="IN L"/>
+      </net>
+      <net>
+         <source obj="router" outlet="B-SEND R"/>
+         <dest obj="reverb" inlet="IN R"/>
+      </net>
+      <net>
+         <source obj="in_2" outlet="left"/>
+         <dest obj="router" inlet="IN L"/>
+      </net>
+      <net>
+         <source obj="in_2" outlet="right"/>
+         <dest obj="router" inlet="IN R"/>
+      </net>
+      <net>
+         <source obj="inv_5" outlet="o"/>
+         <dest obj="reverb" inlet="trails"/>
+      </net>
+      <net>
+         <source obj="router" outlet="OUT L"/>
+         <dest obj="out_2" inlet="left"/>
+      </net>
+      <net>
+         <source obj="router" outlet="OUT R"/>
+         <dest obj="out_2" inlet="right"/>
+      </net>
+      <net>
+         <source obj="inv_6" outlet="o"/>
+         <dest obj="Vibrato" inlet="random"/>
+      </net>
+      <net>
+         <source obj="inv_8" outlet="o"/>
+         <dest obj="router" inlet="order"/>
+         <dest obj="Vibrato" inlet="post_reverb"/>
+      </net>
+      <net>
+         <source obj="inv_9" outlet="o"/>
+         <dest obj="inv_3" inlet="i"/>
+         <dest obj="bypass-stereo" inlet="rin_"/>
+      </net>
+      <net>
+         <source obj="lowpass_1" outlet="out"/>
+         <dest obj="&gt;_1" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="dial_1" outlet="out"/>
+         <dest obj="&gt;_1" inlet="in2"/>
+      </net>
+      <net>
+         <source obj="&gt;_1" outlet="out"/>
+         <dest obj="inv_8" inlet="i"/>
+      </net>
+      <net>
+         <source obj="digital_3" outlet="out"/>
+         <dest obj="lowpass_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="lowpass_2" outlet="out"/>
+         <dest obj="&gt;_2" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="dial_2" outlet="out"/>
+         <dest obj="&gt;_2" inlet="in2"/>
+      </net>
+      <net>
+         <source obj="&gt;_2" outlet="out"/>
+         <dest obj="inv_6" inlet="i"/>
+      </net>
+      <net>
+         <source obj="digital_2" outlet="out"/>
+         <dest obj="lowpass_2" inlet="in"/>
+      </net>
+      <net>
+         <source obj="lowpass_3" outlet="out"/>
+         <dest obj="&gt;_3" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="dial_3" outlet="out"/>
+         <dest obj="&gt;_3" inlet="in2"/>
+      </net>
+      <net>
+         <source obj="digital_1" outlet="out"/>
+         <dest obj="lowpass_3" inlet="in"/>
+      </net>
+      <net>
+         <source obj="lowpass_4" outlet="out"/>
+         <dest obj="&gt;_4" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="dial_4" outlet="out"/>
+         <dest obj="&gt;_4" inlet="in2"/>
+      </net>
+      <net>
+         <source obj="digital_4" outlet="out"/>
+         <dest obj="lowpass_4" inlet="in"/>
+      </net>
+      <net>
+         <source obj="&gt;_4" outlet="out"/>
+         <dest obj="inv_9" inlet="i"/>
+      </net>
+      <net>
+         <source obj="&gt;_3" outlet="out"/>
+         <dest obj="inv_7" inlet="i"/>
+      </net>
+      <net>
+         <source obj="follower_1" outlet="amp"/>
+         <dest obj="comp_1" inlet="in"/>
+         <dest obj="dial_6" inlet="in"/>
+      </net>
+      <net>
+         <source obj="reverb" outlet="lmnts LOUT"/>
+         <dest obj="mix_1" inlet="bus_in"/>
+      </net>
+      <net>
+         <source obj="comp_1" outlet="out"/>
+         <dest obj="smooth2_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="smooth2_1" outlet="out"/>
+         <dest obj="chart_1" inlet="in"/>
+         <dest obj="dial_7" inlet="in"/>
+         <dest obj="-c_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="reverb" outlet="lmnts ROUT"/>
+         <dest obj="mix_1" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="mix_1" outlet="out"/>
+         <dest obj="follower_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="-c_1" outlet="out"/>
+         <dest obj="dial_8" inlet="in"/>
+         <dest obj="reverb" inlet="lmnts decay adjust"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>736</x>
+      <y>72</y>
+      <width>1862</width>
+      <height>1246</height>
+   </windowPos>
+</patch-1.0>

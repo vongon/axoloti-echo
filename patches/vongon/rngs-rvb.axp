@@ -1,0 +1,110 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="ctrl/button" uuid="ef3d13774349df85aa9bfecf30dbc91ab8488b3f" name="button_1" x="168" y="56">
+      <params>
+         <bool32.mom name="b" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="vongon/analog_bypass" uuid="__1" name="analog_bypass_1" x="378" y="56">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="jaffa/ctrl/dial i" uuid="ac6473d0-05db-4d2a-84ff-698c9682ba3c" name="mix" x="504" y="154">
+      <params>
+         <frac32.u.map name="value" value="31.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mix/xfade" uuid="cfac82d503dc55fd2e3f90d8d05283610532b8c4" name="xfade_1" x="672" y="210">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="drj/audio/out_stereo_vol" uuid="awca1a567f535acc21055669829101d3ee7f0189" name="out_stereo_vol_1" x="784" y="280">
+      <params>
+         <frac32.u.map name="volume" value="64.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mix/xfade" uuid="cfac82d503dc55fd2e3f90d8d05283610532b8c4" name="xfade_2" x="672" y="294">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="audio/in left" uuid="d40e60b7641fe75af4d7c91b45bb038aacafc52e" name="in_1" x="154" y="308">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="sss/dyn/compST" uuid="011bc610-1365-4629-8a4c-be04df5f5757" name="compST_1" x="322" y="350">
+      <params>
+         <frac32.u.map name="tresh" value="8.699999809265137"/>
+         <frac32.u.map name="soft" value="37.299999713897705"/>
+         <frac32.u.map name="ratio" value="26.0"/>
+         <frac32.u.map name="attack" value="14.5"/>
+         <frac32.u.map name="decay" value="22.0"/>
+         <frac32.u.map name="gain" value="11.0"/>
+         <bool32.tgl name="limiter" value="1"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="fx/rngs/reverb" uuid="bb0fb9e0-aafe-4501-ba83-897f2530751d" name="reverb_2" x="490" y="378">
+      <params>
+         <frac32.u.map name="amount" value="64.0"/>
+         <frac32.u.map name="time" value="15.849999904632568"/>
+         <frac32.u.map name="diffusion" value="42.549999713897705"/>
+         <frac32.u.map name="gain" value="24.899999618530273"/>
+         <frac32.u.map name="lowpass" value="27.449999809265137"/>
+      </params>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="in_1" outlet="wave"/>
+         <dest obj="compST_1" inlet="inL"/>
+         <dest obj="compST_1" inlet="inR"/>
+         <dest obj="xfade_1" inlet="i1"/>
+         <dest obj="xfade_2" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="xfade_2" outlet="o"/>
+         <dest obj="out_stereo_vol_1" inlet="right"/>
+      </net>
+      <net>
+         <source obj="xfade_1" outlet="o"/>
+         <dest obj="out_stereo_vol_1" inlet="left"/>
+      </net>
+      <net>
+         <source obj="mix" outlet="o"/>
+         <dest obj="xfade_1" inlet="c"/>
+         <dest obj="xfade_2" inlet="c"/>
+      </net>
+      <net>
+         <source obj="compST_1" outlet="outL"/>
+         <dest obj="reverb_2" inlet="l"/>
+      </net>
+      <net>
+         <source obj="compST_1" outlet="outR"/>
+         <dest obj="reverb_2" inlet="r"/>
+      </net>
+      <net>
+         <source obj="reverb_2" outlet="l"/>
+         <dest obj="xfade_1" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="reverb_2" outlet="r"/>
+         <dest obj="xfade_2" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="button_1" outlet="o"/>
+         <dest obj="analog_bypass_1" inlet="trig"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>1059</x>
+      <y>144</y>
+      <width>1424</width>
+      <height>1163</height>
+   </windowPos>
+</patch-1.0>
