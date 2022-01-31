@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 1
 
 
    1              		.syntax unified
@@ -50,55 +50,55 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
   47 0006 00000000 		.4byte	.Ldebug_abbrev0
   48 000a 04       		.byte	0x4
   49 000b 01       		.uleb128 0x1
-  50 000c 4E000000 		.4byte	.LASF25
+  50 000c 41000000 		.4byte	.LASF25
   51 0010 01       		.byte	0x1
-  52 0011 7A010000 		.4byte	.LASF26
-  53 0015 0B020000 		.4byte	.LASF27
+  52 0011 6D010000 		.4byte	.LASF26
+  53 0015 13020000 		.4byte	.LASF27
   54 0019 00000000 		.4byte	.Ltext0
   55 001d 02000000 		.4byte	.Letext0-.Ltext0
   56 0021 00000000 		.4byte	.Ldebug_line0
   57 0025 02       		.uleb128 0x2
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 2
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 2
 
 
   58 0026 01       		.byte	0x1
   59 0027 06       		.byte	0x6
-  60 0028 C9010000 		.4byte	.LASF0
+  60 0028 BC010000 		.4byte	.LASF0
   61 002c 02       		.uleb128 0x2
   62 002d 01       		.byte	0x1
   63 002e 08       		.byte	0x8
-  64 002f 84010000 		.4byte	.LASF1
+  64 002f 77010000 		.4byte	.LASF1
   65 0033 03       		.uleb128 0x3
-  66 0034 22000000 		.4byte	.LASF4
+  66 0034 15000000 		.4byte	.LASF4
   67 0038 02       		.byte	0x2
   68 0039 29       		.byte	0x29
   69 003a 3E000000 		.4byte	0x3e
   70 003e 02       		.uleb128 0x2
   71 003f 02       		.byte	0x2
   72 0040 05       		.byte	0x5
-  73 0041 59010000 		.4byte	.LASF2
+  73 0041 4C010000 		.4byte	.LASF2
   74 0045 02       		.uleb128 0x2
   75 0046 02       		.byte	0x2
   76 0047 07       		.byte	0x7
-  77 0048 B6010000 		.4byte	.LASF3
+  77 0048 A9010000 		.4byte	.LASF3
   78 004c 03       		.uleb128 0x3
-  79 004d EE010000 		.4byte	.LASF5
+  79 004d E1010000 		.4byte	.LASF5
   80 0051 02       		.byte	0x2
   81 0052 3F       		.byte	0x3f
   82 0053 57000000 		.4byte	0x57
   83 0057 02       		.uleb128 0x2
   84 0058 04       		.byte	0x4
   85 0059 05       		.byte	0x5
-  86 005a A0010000 		.4byte	.LASF6
+  86 005a 93010000 		.4byte	.LASF6
   87 005e 03       		.uleb128 0x3
-  88 005f 3B000000 		.4byte	.LASF7
+  88 005f 2E000000 		.4byte	.LASF7
   89 0063 02       		.byte	0x2
   90 0064 41       		.byte	0x41
   91 0065 69000000 		.4byte	0x69
   92 0069 02       		.uleb128 0x2
   93 006a 04       		.byte	0x4
   94 006b 07       		.byte	0x7
-  95 006c 47010000 		.4byte	.LASF8
+  95 006c 3A010000 		.4byte	.LASF8
   96 0070 02       		.uleb128 0x2
   97 0071 08       		.byte	0x8
   98 0072 05       		.byte	0x5
@@ -106,7 +106,7 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  100 0077 02       		.uleb128 0x2
  101 0078 08       		.byte	0x8
  102 0079 07       		.byte	0x7
- 103 007a 63010000 		.4byte	.LASF10
+ 103 007a 56010000 		.4byte	.LASF10
  104 007e 04       		.uleb128 0x4
  105 007f 04       		.byte	0x4
  106 0080 05       		.byte	0x5
@@ -114,53 +114,53 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  108 0085 02       		.uleb128 0x2
  109 0086 04       		.byte	0x4
  110 0087 07       		.byte	0x7
- 111 0088 E1010000 		.4byte	.LASF11
+ 111 0088 D4010000 		.4byte	.LASF11
  112 008c 03       		.uleb128 0x3
- 113 008d 46000000 		.4byte	.LASF12
+ 113 008d 39000000 		.4byte	.LASF12
  114 0091 03       		.byte	0x3
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 3
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 3
 
 
  115 0092 19       		.byte	0x19
  116 0093 33000000 		.4byte	0x33
  117 0097 03       		.uleb128 0x3
- 118 0098 48020000 		.4byte	.LASF13
+ 118 0098 0B020000 		.4byte	.LASF13
  119 009c 03       		.byte	0x3
  120 009d 1F       		.byte	0x1f
  121 009e 4C000000 		.4byte	0x4c
  122 00a2 03       		.uleb128 0x3
- 123 00a3 97010000 		.4byte	.LASF14
+ 123 00a3 8A010000 		.4byte	.LASF14
  124 00a7 03       		.byte	0x3
  125 00a8 20       		.byte	0x20
  126 00a9 5E000000 		.4byte	0x5e
  127 00ad 02       		.uleb128 0x2
  128 00ae 04       		.byte	0x4
  129 00af 07       		.byte	0x7
- 130 00b0 50020000 		.4byte	.LASF15
+ 130 00b0 56020000 		.4byte	.LASF15
  131 00b4 02       		.uleb128 0x2
  132 00b5 01       		.byte	0x1
  133 00b6 02       		.byte	0x2
- 134 00b7 B0010000 		.4byte	.LASF16
+ 134 00b7 A3010000 		.4byte	.LASF16
  135 00bb 02       		.uleb128 0x2
  136 00bc 01       		.byte	0x1
  137 00bd 08       		.byte	0x8
- 138 00be 92010000 		.4byte	.LASF17
+ 138 00be 85010000 		.4byte	.LASF17
  139 00c2 05       		.uleb128 0x5
  140 00c3 97000000 		.4byte	0x97
  141 00c7 02       		.uleb128 0x2
  142 00c8 08       		.byte	0x8
  143 00c9 04       		.byte	0x4
- 144 00ca A9010000 		.4byte	.LASF18
+ 144 00ca 9C010000 		.4byte	.LASF18
  145 00ce 02       		.uleb128 0x2
  146 00cf 04       		.byte	0x4
  147 00d0 04       		.byte	0x4
- 148 00d1 05020000 		.4byte	.LASF19
+ 148 00d1 F8010000 		.4byte	.LASF19
  149 00d5 02       		.uleb128 0x2
  150 00d6 08       		.byte	0x8
  151 00d7 04       		.byte	0x4
- 152 00d8 D5010000 		.4byte	.LASF20
+ 152 00d8 C8010000 		.4byte	.LASF20
  153 00dc 06       		.uleb128 0x6
- 154 00dd F8010000 		.4byte	.LASF28
+ 154 00dd EB010000 		.4byte	.LASF28
  155 00e1 01       		.byte	0x1
  156 00e2 17       		.byte	0x17
  157 00e3 00000000 		.4byte	.LFB179
@@ -168,7 +168,7 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  159 00eb 01       		.uleb128 0x1
  160 00ec 9C       		.byte	0x9c
  161 00ed 07       		.uleb128 0x7
- 162 00ee 15000000 		.4byte	.LASF21
+ 162 00ee FE010000 		.4byte	.LASF21
  163 00f2 04       		.byte	0x4
  164 00f3 DF07     		.2byte	0x7df
  165 00f5 C2000000 		.4byte	0xc2
@@ -178,12 +178,12 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  169 0102 09       		.uleb128 0x9
  170 0103 AD000000 		.4byte	0xad
  171 0107 0010     		.2byte	0x1000
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 4
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 4
 
 
  172 0109 00       		.byte	0
  173 010a 0A       		.uleb128 0xa
- 174 010b 34000000 		.4byte	.LASF22
+ 174 010b 27000000 		.4byte	.LASF22
  175 010f 05       		.byte	0x5
  176 0110 26       		.byte	0x26
  177 0111 F9000000 		.4byte	0xf9
@@ -195,7 +195,7 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  183 0123 0004     		.2byte	0x400
  184 0125 00       		.byte	0
  185 0126 0A       		.uleb128 0xa
- 186 0127 2C000000 		.4byte	.LASF23
+ 186 0127 1F000000 		.4byte	.LASF23
  187 012b 05       		.byte	0x5
  188 012c 28       		.byte	0x28
  189 012d 15010000 		.4byte	0x115
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  226 0015 00       		.byte	0
  227 0016 0B       		.uleb128 0xb
  228 0017 0B       		.uleb128 0xb
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 5
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 5
 
 
  229 0018 3E       		.uleb128 0x3e
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  283 004e 40       		.uleb128 0x40
  284 004f 18       		.uleb128 0x18
  285 0050 9742     		.uleb128 0x2117
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 6
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 6
 
 
  286 0052 19       		.uleb128 0x19
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  340 0088 00       		.byte	0
  341 0089 00       		.byte	0
  342              		.section	.debug_aranges,"",%progbits
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 7
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 7
 
 
  343 0000 1C000000 		.4byte	0x1c
@@ -387,157 +387,158 @@ ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 1
  359              	.LASF24:
  360 000e 70697463 		.ascii	"pitcht\000"
  360      687400
- 361              	.LASF21:
- 362 0015 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 362      52784275 
- 362      66666572 
- 362      00
- 363              	.LASF4:
- 364 0022 5F5F696E 		.ascii	"__int16_t\000"
- 364      7431365F 
- 364      7400
- 365              	.LASF23:
- 366 002c 77696E64 		.ascii	"windowt\000"
- 366      6F777400 
- 367              	.LASF22:
- 368 0034 73696E65 		.ascii	"sine2t\000"
- 368      327400
- 369              	.LASF7:
- 370 003b 5F5F7569 		.ascii	"__uint32_t\000"
- 370      6E743332 
- 370      5F7400
- 371              	.LASF12:
- 372 0046 696E7431 		.ascii	"int16_t\000"
- 372      365F7400 
- 373              	.LASF25:
- 374 004e 474E5520 		.ascii	"GNU C 4.9.3 20150529 (release) [ARM/embedded-4_9-br"
- 374      4320342E 
- 374      392E3320 
- 374      32303135 
- 374      30353239 
- 375 0081 616E6368 		.ascii	"anch revision 224288] -mcpu=cortex-m4 -mfloat-abi=h"
- 375      20726576 
- 375      6973696F 
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 8
+ 361              	.LASF4:
+ 362 0015 5F5F696E 		.ascii	"__int16_t\000"
+ 362      7431365F 
+ 362      7400
+ 363              	.LASF23:
+ 364 001f 77696E64 		.ascii	"windowt\000"
+ 364      6F777400 
+ 365              	.LASF22:
+ 366 0027 73696E65 		.ascii	"sine2t\000"
+ 366      327400
+ 367              	.LASF7:
+ 368 002e 5F5F7569 		.ascii	"__uint32_t\000"
+ 368      6E743332 
+ 368      5F7400
+ 369              	.LASF12:
+ 370 0039 696E7431 		.ascii	"int16_t\000"
+ 370      365F7400 
+ 371              	.LASF25:
+ 372 0041 474E5520 		.ascii	"GNU C 4.9.3 20150529 (release) [ARM/embedded-4_9-br"
+ 372      4320342E 
+ 372      392E3320 
+ 372      32303135 
+ 372      30353239 
+ 373 0074 616E6368 		.ascii	"anch revision 224288] -mcpu=cortex-m4 -mfloat-abi=h"
+ 373      20726576 
+ 373      6973696F 
+ 373      6E203232 
+ 373      34323838 
+ 374 00a7 61726420 		.ascii	"ard -mfpu=fpv4-sp-d16 -mno-thumb-interwork -mthumb "
+ 374      2D6D6670 
+ 374      753D6670 
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 8
 
 
- 375      6E203232 
- 375      34323838 
- 376 00b4 61726420 		.ascii	"ard -mfpu=fpv4-sp-d16 -mno-thumb-interwork -mthumb "
- 376      2D6D6670 
- 376      753D6670 
- 376      76342D73 
- 376      702D6431 
- 377 00e7 2D676764 		.ascii	"-ggdb -O2 -fomit-frame-pointer -falign-functions=16"
- 377      62202D4F 
- 377      32202D66 
- 377      6F6D6974 
- 377      2D667261 
- 378 011a 202D666E 		.ascii	" -fno-math-errno -fsingle-precision-constant\000"
- 378      6F2D6D61 
- 378      74682D65 
- 378      72726E6F 
- 378      202D6673 
- 379              	.LASF8:
- 380 0147 6C6F6E67 		.ascii	"long unsigned int\000"
- 380      20756E73 
- 380      69676E65 
- 380      6420696E 
+ 374      76342D73 
+ 374      702D6431 
+ 375 00da 2D676764 		.ascii	"-ggdb -O2 -fomit-frame-pointer -falign-functions=16"
+ 375      62202D4F 
+ 375      32202D66 
+ 375      6F6D6974 
+ 375      2D667261 
+ 376 010d 202D666E 		.ascii	" -fno-math-errno -fsingle-precision-constant\000"
+ 376      6F2D6D61 
+ 376      74682D65 
+ 376      72726E6F 
+ 376      202D6673 
+ 377              	.LASF8:
+ 378 013a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 378      20756E73 
+ 378      69676E65 
+ 378      6420696E 
+ 378      7400
+ 379              	.LASF2:
+ 380 014c 73686F72 		.ascii	"short int\000"
+ 380      7420696E 
  380      7400
- 381              	.LASF2:
- 382 0159 73686F72 		.ascii	"short int\000"
- 382      7420696E 
- 382      7400
- 383              	.LASF10:
- 384 0163 6C6F6E67 		.ascii	"long long unsigned int\000"
- 384      206C6F6E 
- 384      6720756E 
- 384      7369676E 
- 384      65642069 
- 385              	.LASF26:
- 386 017a 61786F6C 		.ascii	"axoloti.c\000"
- 386      6F74692E 
- 386      6300
- 387              	.LASF1:
- 388 0184 756E7369 		.ascii	"unsigned char\000"
- 388      676E6564 
- 388      20636861 
- 388      7200
- 389              	.LASF17:
- 390 0192 63686172 		.ascii	"char\000"
+ 381              	.LASF10:
+ 382 0156 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 382      206C6F6E 
+ 382      6720756E 
+ 382      7369676E 
+ 382      65642069 
+ 383              	.LASF26:
+ 384 016d 61786F6C 		.ascii	"axoloti.c\000"
+ 384      6F74692E 
+ 384      6300
+ 385              	.LASF1:
+ 386 0177 756E7369 		.ascii	"unsigned char\000"
+ 386      676E6564 
+ 386      20636861 
+ 386      7200
+ 387              	.LASF17:
+ 388 0185 63686172 		.ascii	"char\000"
+ 388      00
+ 389              	.LASF14:
+ 390 018a 75696E74 		.ascii	"uint32_t\000"
+ 390      33325F74 
  390      00
- 391              	.LASF14:
- 392 0197 75696E74 		.ascii	"uint32_t\000"
- 392      33325F74 
+ 391              	.LASF6:
+ 392 0193 6C6F6E67 		.ascii	"long int\000"
+ 392      20696E74 
  392      00
- 393              	.LASF6:
- 394 01a0 6C6F6E67 		.ascii	"long int\000"
- 394      20696E74 
- 394      00
- 395              	.LASF18:
- 396 01a9 646F7562 		.ascii	"double\000"
- 396      6C6500
- 397              	.LASF16:
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 9
+ 393              	.LASF18:
+ 394 019c 646F7562 		.ascii	"double\000"
+ 394      6C6500
+ 395              	.LASF16:
+ 396 01a3 5F426F6F 		.ascii	"_Bool\000"
+ 396      6C00
+ 397              	.LASF3:
+ 398 01a9 73686F72 		.ascii	"short unsigned int\000"
+ 398      7420756E 
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 9
 
 
- 398 01b0 5F426F6F 		.ascii	"_Bool\000"
- 398      6C00
- 399              	.LASF3:
- 400 01b6 73686F72 		.ascii	"short unsigned int\000"
- 400      7420756E 
- 400      7369676E 
- 400      65642069 
- 400      6E7400
- 401              	.LASF0:
- 402 01c9 7369676E 		.ascii	"signed char\000"
- 402      65642063 
- 402      68617200 
- 403              	.LASF20:
- 404 01d5 6C6F6E67 		.ascii	"long double\000"
- 404      20646F75 
- 404      626C6500 
- 405              	.LASF11:
- 406 01e1 756E7369 		.ascii	"unsigned int\000"
- 406      676E6564 
- 406      20696E74 
- 406      00
- 407              	.LASF5:
- 408 01ee 5F5F696E 		.ascii	"__int32_t\000"
- 408      7433325F 
- 408      7400
- 409              	.LASF28:
- 410 01f8 61786F6C 		.ascii	"axoloti_init\000"
- 410      6F74695F 
- 410      696E6974 
- 410      00
- 411              	.LASF19:
- 412 0205 666C6F61 		.ascii	"float\000"
- 412      7400
- 413              	.LASF27:
- 414 020b 2F557365 		.ascii	"/Users/ryanmcgill/Documents/VONGON/SELECTOR/axoloti"
- 414      72732F72 
- 414      79616E6D 
- 414      6367696C 
- 414      6C2F446F 
- 415 023e 2F666972 		.ascii	"/firmware\000"
- 415      6D776172 
- 415      6500
- 416              	.LASF13:
- 417 0248 696E7433 		.ascii	"int32_t\000"
- 417      325F7400 
+ 398      7369676E 
+ 398      65642069 
+ 398      6E7400
+ 399              	.LASF0:
+ 400 01bc 7369676E 		.ascii	"signed char\000"
+ 400      65642063 
+ 400      68617200 
+ 401              	.LASF20:
+ 402 01c8 6C6F6E67 		.ascii	"long double\000"
+ 402      20646F75 
+ 402      626C6500 
+ 403              	.LASF11:
+ 404 01d4 756E7369 		.ascii	"unsigned int\000"
+ 404      676E6564 
+ 404      20696E74 
+ 404      00
+ 405              	.LASF5:
+ 406 01e1 5F5F696E 		.ascii	"__int32_t\000"
+ 406      7433325F 
+ 406      7400
+ 407              	.LASF28:
+ 408 01eb 61786F6C 		.ascii	"axoloti_init\000"
+ 408      6F74695F 
+ 408      696E6974 
+ 408      00
+ 409              	.LASF19:
+ 410 01f8 666C6F61 		.ascii	"float\000"
+ 410      7400
+ 411              	.LASF21:
+ 412 01fe 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 412      52784275 
+ 412      66666572 
+ 412      00
+ 413              	.LASF13:
+ 414 020b 696E7433 		.ascii	"int32_t\000"
+ 414      325F7400 
+ 415              	.LASF27:
+ 416 0213 2F557365 		.ascii	"/Users/ryanmcgill/Documents/VONGON/ECHO/code/axolot"
+ 416      72732F72 
+ 416      79616E6D 
+ 416      6367696C 
+ 416      6C2F446F 
+ 417 0246 692D6563 		.ascii	"i-echo/firmware\000"
+ 417      686F2F66 
+ 417      69726D77 
+ 417      61726500 
  418              	.LASF15:
- 419 0250 73697A65 		.ascii	"sizetype\000"
+ 419 0256 73697A65 		.ascii	"sizetype\000"
  419      74797065 
  419      00
  420              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150529 (release) [ARM/embedded-4_9-br
-ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s 			page 10
+ARM GAS  /var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 axoloti.c
-/var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s:20     .text:0000000000000000 $t
-/var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//cc5mfdR3.s:26     .text:0000000000000000 axoloti_init
+/var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s:20     .text:0000000000000000 $t
+/var/folders/28/j9jfyj_n4wz3qtvnym210h2c0000gn/T//ccGACIGF.s:26     .text:0000000000000000 axoloti_init
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS
