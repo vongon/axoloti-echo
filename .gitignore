@@ -1,0 +1,7 @@
+build
+firmware/.dep/
+firmware/build/
+dist/
+src/main/java/axoloti/Version.java
+.DS_Store
+axoloti-factory
