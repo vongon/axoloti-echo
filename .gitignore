@@ -2,6 +2,7 @@ build
 firmware/.dep/
 firmware/build/
 firmware/env.inc.mk
+firmware/dump
 dist/
 src/main/java/axoloti/Version.java
 .DS_Store

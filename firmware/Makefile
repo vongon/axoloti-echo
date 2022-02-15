@@ -455,3 +455,4 @@ dump_flash:
 	$(OPENOCD_CMD) -c init -c halt \
 		-c "flash read_bank 0 dump/flash.bin" \
 		-c reset -c exit
+	xxd dump/flash.bin > dump/flash.xxd
