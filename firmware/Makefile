@@ -340,8 +340,8 @@ INCDIR = ${CMSIS}/Include \
 
 MCU  = cortex-m4
 
-#TRGT = arm-elf-
-TRGT = arm-none-eabi-
+-include env.inc.mk
+TRGT = $(TOOLCHAIN_PATH)arm-none-eabi-
 CC   = $(TRGT)gcc
 CPPC = $(TRGT)g++
 # Enable loading with g++ only if you need C++ runtime support.
@@ -420,3 +420,34 @@ ULIBS = -lm
 
 RULESPATH = $(CHIBIOS)/os/ports/GCC/ARMCMx
 include $(RULESPATH)/rules.mk
+
+# ------------------------------------------------------------------------------
+# Firmware flashing
+# ------------------------------------------------------------------------------
+
+OPENOCD_PATH ?=
+PGM_INTERFACE ?= -f interface/stlink.cfg
+
+OPENOCD_CMD := $(OPENOCD_PATH)openocd -c "debug_level 1" $(PGM_INTERFACE) \
+	-f target/stm32f4x.cfg \
+	-c "stm32f4x.cpu configure -event reset-init {}"
+
+.PHONY: load
+load: $(BUILDDIR)/$(PROJECT).elf
+	$(OPENOCD_CMD) -c "program $< verify reset exit"
+
+.PHONY: reset
+reset:
+	$(OPENOCD_CMD) -c init -c reset -c exit
+
+.PHONY: erase
+erase:
+	$(OPENOCD_CMD) -c init -c halt -c "flash erase_sector 0 0 last" \
+		-c reset -c exit
+
+.PHONY: dump_flash
+dump_flash:
+	mkdir -p dump
+	$(OPENOCD_CMD) -c init -c halt \
+		-c "flash read_bank 0 dump/flash.bin" \
+		-c reset -c exit

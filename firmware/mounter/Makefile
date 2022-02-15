@@ -139,7 +139,8 @@ INCDIR = ../ \
 
 MCU  = cortex-m4
 
-TRGT = arm-none-eabi-
+-include ../env.inc.mk
+TRGT = $(TOOLCHAIN_PATH)arm-none-eabi-
 CC   = $(TRGT)gcc
 CPPC = $(TRGT)g++
 # Enable loading with g++ only if you need C++ runtime support.

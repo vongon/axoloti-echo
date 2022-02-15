@@ -5,12 +5,13 @@ LDFLAGS = -nostartfiles -Tramlink.ld -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4
 #-mno-thumb-interwork 
 #-mthumb
 #-Wl,-Map=build/ch.map,--cref,--no-warn-mismatch,--gc-sections 
- 
-CC=arm-none-eabi-gcc
-CPP=arm-none-eabi-g++
-LD=arm-none-eabi-gcc
-CP=arm-none-eabi-objcopy
-DMP=arm-none-eabi-objdump
+
+-include env.inc.mk
+CC=$(TOOLCHAIN_PATH)arm-none-eabi-gcc
+CPP=$(TOOLCHAIN_PATH)arm-none-eabi-g++
+LD=$(TOOLCHAIN_PATH)arm-none-eabi-gcc
+CP=$(TOOLCHAIN_PATH)arm-none-eabi-objcopy
+DMP=$(TOOLCHAIN_PATH)arm-none-eabi-objdump
 
 axoloti_runtime ?= ..
 axoloti_release ?= ..
@@ -21,11 +22,7 @@ axoloti_firmware ?= ../firmware
 CHIBIOS = ${axoloti_release}/chibios
 CMSIS = ${axoloti_release}/CMSIS
 
-SPACE := 
-SPACE += 
-BDIR=$(subst $(SPACE),\ ,${axoloti_home}/build)
-# theoretically should be this...., but CSRC expansion cannot cope with escape spaces
-#FIRMWARE=$(subst $(SPACE),\ ,${axoloti_firmware})
+BDIR=${axoloti_home}/build
 FIRMWARE=.
 
 $(info BDIR = ${BDIR})
