@@ -5,7 +5,10 @@
 
 # Compiler options here.
 ifeq ($(USE_OPT),)
-  USE_OPT = -O2 -ggdb -fomit-frame-pointer -falign-functions=16 -fno-math-errno -Wno-unused-parameter
+  USE_OPT = -O2 -ggdb \
+	-fomit-frame-pointer -falign-functions=16 -fno-math-errno \
+	-Wno-unused-parameter \
+	-DCORTEX_VTOR_INIT=0x08004000
 endif
 
 # C specific options here (added to USE_OPT).
@@ -204,7 +207,8 @@ CSRC = $(PORTSRC) \
        ${FIRMWARE}/exceptions.c \
        ${FIRMWARE}/watchdog.c \
        ${FIRMWARE}/sysmon.c \
-       ${FIRMWARE}/axoloti_memory.c
+       ${FIRMWARE}/axoloti_memory.c \
+       ${FIRMWARE}/placeholder_vectors.c
 
 #optional modules
 ifneq (,$(findstring BRAIDS,$(AXO_OPT_MODULES)))

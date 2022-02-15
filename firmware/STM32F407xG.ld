@@ -25,7 +25,8 @@ __process_stack_size__  = 0x400;
 
 MEMORY
 {
-    flash (rx): org = 0x08000000, len = 896k /* last 128kB for patch storage*/
+    BOOTLOADER (rx): org = 0x08000000, len = 16k
+    flash (rx): org = 0x08004000, len = 880k /* last 128kB for patch storage*/
     ram : org = 0x20000200, len = 0x0AE00 /* 44k - first 0x200 for vector table */
     SRAM2  : org = 0x2001E000, len = 0x00002000 /* second half (8kB) of SRAM2 for DMA*/      
     CCMRAMEND  : org = 0x1000C000, len = 10k /* for stacks */    
@@ -45,6 +46,13 @@ ENTRY(ResetHandler)
 SECTIONS
 {
     . = 0;
+
+    .bootloader (ORIGIN(BOOTLOADER)) : AT (ORIGIN(BOOTLOADER))
+    {
+        KEEP (*(.bootloader))
+        . = LENGTH(BOOTLOADER);
+    } > BOOTLOADER
+
     _text = .;
 
     startup : ALIGN(16) SUBALIGN(16)
