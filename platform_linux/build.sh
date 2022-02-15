@@ -113,17 +113,17 @@ fi
 if [ ! -f "$PLATFORM_ROOT/bin/arm-none-eabi-gcc" ];
 then
     cd "${PLATFORM_ROOT}/src"
-    ARCHIVE=gcc-arm-none-eabi-4_9-2015q2-20150609-linux.tar.bz2
+    ARCHIVE=gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
     if [ ! -f ${ARCHIVE} ];
     then
         echo "downloading ${ARCHIVE}"
-        curl -L https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/$ARCHIVE > $ARCHIVE
+        curl -L https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2020q2/$ARCHIVE > $ARCHIVE
     else
         echo "${ARCHIVE} already downloaded"
     fi
     tar xfj ${ARCHIVE}
-    cp -rv gcc-arm-none-eabi-4_9-2015q2/* ..
-    rm -r gcc-arm-none-eabi-4_9-2015q2
+    cp -rv gcc-arm-none-eabi-9-2020-q2-update/* ..
+    rm -r gcc-arm-none-eabi-9-2020-q2-update
 else
     echo "bin/arm-none-eabi-gcc already present, skipping..."
 fi
