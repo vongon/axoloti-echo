@@ -26,6 +26,6 @@ TARGET_DIR := $(BUILD_DIR)/artifact
 $(TARGET_DIR):
 	mkdir -p $@
 
-SUBMAKEFILES := example.mk
+SUBMAKEFILES := bl.mk
 
-.DEFAULT_GOAL := example
+.DEFAULT_GOAL := bl

@@ -28,9 +28,9 @@ PACKET_SIZE := 256
 BLOCK_SIZE := 0x4000
 CRC_SEED := 0xC610C290
 
-TARGET := example.elf
-SOURCES := example/*.cpp example/hal/*.c
-LD_SCRIPT := example/app.ld
+TARGET := bl.elf
+SOURCES := bl/*.cpp bl/hal/*.c
+LD_SCRIPT := bl/app.ld
 
 TGT_CC := arm-none-eabi-gcc
 TGT_CXX := arm-none-eabi-g++
@@ -70,7 +70,7 @@ OPTFLAGS := \
 	-fsingle-precision-constant \
 	-finline-functions \
 
-TGT_INCDIRS  := . example example/hal
+TGT_INCDIRS  := . bl bl/hal
 TGT_CFLAGS   := -Os -g $(ARCHFLAGS) $(OPTFLAGS) $(WARNFLAGS) -std=c11
 TGT_CXXFLAGS := -Os -g $(ARCHFLAGS) $(OPTFLAGS) $(WARNFLAGS) -std=c++17 \
 	-fno-exceptions -fno-rtti -Wno-register
@@ -83,19 +83,19 @@ TGT_LDFLAGS  := $(ARCHFLAGS) \
 	-Wl,--defsym,STACK_SIZE=$(STACK_SIZE) \
 	-Wl,--defsym,BOOTLOADER_SIZE=$(BOOTLOADER_SIZE) \
 
-.PHONY: example
-example: $(TARGET_DIR)/$(TARGET)
+.PHONY: bl
+bl: $(TARGET_DIR)/$(TARGET)
 
 OPENOCD_CMD := openocd -c "debug_level 1" -f board/stm32f4discovery.cfg
 
-.PHONY: load-example
-load-example: $(TARGET_DIR)/$(TARGET)
+.PHONY: load-bl
+load-bl: $(TARGET_DIR)/$(TARGET)
 	$(OPENOCD_CMD) -c "program $< verify reset exit"
 
 WAV_FILE := $(TARGET_DIR)/data.wav
 
 .PHONY: wav
-wav: example/data.bin | $(TARGET_DIR)
+wav: bl/data.bin | $(TARGET_DIR)
 	python3 qpsk/encoder.py \
 		-s $(SAMPLE_RATE) -y $(SYMBOL_RATE) -b $(BLOCK_SIZE) \
 		-w 410 -f 16K:500:4 64K:1100:1 128K:2000:7 -x 0x08000000 \
@@ -113,18 +113,18 @@ define TGT_POSTMAKE
 	awk '{ printf "0x%05X %d", $$2+$$3, $$2+$$3 }')
 endef
 
-.PHONY: example-sym
-example-sym: $(TARGET_DIR)/$(TARGET)
+.PHONY: bl-sym
+bl-sym: $(TARGET_DIR)/$(TARGET)
 	arm-none-eabi-nm -CnS $< | less
 
-.PHONY: example-top
-example-top: $(TARGET_DIR)/$(TARGET)
+.PHONY: bl-top
+bl-top: $(TARGET_DIR)/$(TARGET)
 	arm-none-eabi-nm -CrS --size-sort $< | less
 
 .PHONY: verify
 verify:
 	$(OPENOCD_CMD) -c init \
-		-c "flash verify_bank 0 example/data.bin $(BOOTLOADER_SIZE)" -c exit
+		-c "flash verify_bank 0 bl/data.bin $(BOOTLOADER_SIZE)" -c exit
 
 .PHONY: erase
 erase:
