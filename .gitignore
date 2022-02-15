@@ -5,3 +5,4 @@ dist/
 src/main/java/axoloti/Version.java
 .DS_Store
 axoloti-factory
+axoloti.prefs
