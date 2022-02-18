@@ -41,6 +41,7 @@ OutputPin red_led_;
 OutputPin green_led_;
 OutputPin led1_;
 OutputPin led2_;
+OutputPin relay_control_;
 
 Button button1_;
 Button button2_;
@@ -224,10 +225,12 @@ int main(void)
     led1_.Init(GPIOB, GPIO_PIN_0);
     led2_.Init(GPIOB, GPIO_PIN_1);
     button2_.Init(GPIOC, GPIO_PIN_5);
+    relay_control_.Init(GPIOC, GPIO_PIN_12);
     codec_.Init(CodecCallback);
     decoder_.Init(kCRCSeed);
     __enable_irq();
 
+    relay_control_.Set();
     codec_.Start();
     uint32_t block_address = kAppStartAddress;
 
