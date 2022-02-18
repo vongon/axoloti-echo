@@ -430,8 +430,8 @@ include $(RULESPATH)/rules.mk
 # ------------------------------------------------------------------------------
 
 FW_ELF := $(BUILDDIR)/$(PROJECT).elf
-BL_HEX := bootloader/build/artifact/bl.hex
 FW_HEX := $(FW_ELF:.elf=.hex)
+BL_HEX := bootloader/build/artifact/bl.hex
 PATCH_BIN := ${axoloti_home}/build/xpatch.bin
 
 APP_HEX := $(FW_ELF:.elf=-with-patch.hex)
@@ -440,20 +440,23 @@ IMAGE_HEX := $(FW_ELF:.elf=-image.hex)
 IMAGE_BIN := $(IMAGE_HEX:.hex=.bin)
 AXOLOTI_BIN := $(FW_ELF:.elf=.bin)
 
-$(AXOLOTI_BIN): $(FW_HEX)
-	python3 tools/merge.py -o $@ --fill 0xFF $< $(BL_HEX)
+$(BL_HEX): ;
+$(PATCH_BIN): ;
+
+$(AXOLOTI_BIN): $(FW_HEX) $(BL_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF $^
 
 $(IMAGE_BIN): $(IMAGE_HEX)
 	$(BIN) -I ihex $< $@
 
-$(IMAGE_HEX): $(APP_HEX)
-	python3 tools/merge.py -o $@ --fill 0xFF $(APP_HEX) $(BL_HEX)
+$(IMAGE_HEX): $(APP_HEX) $(BL_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF $^
 
 include bootloader/bl_config.inc.mk
 
-$(APP_HEX): $(FW_HEX)
+$(APP_HEX): $(FW_HEX) $(PATCH_BIN)
 	python3 tools/merge.py -o $@ --fill 0xFF --start-address 0x08004000 \
-		$(FW_HEX) $(PATCH_BIN) 0x080E0000
+		$^ 0x080E0000
 
 $(APP_WAV): $(APP_HEX)
 	python3 bootloader/qpsk/encoder.py \
