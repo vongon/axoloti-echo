@@ -33,6 +33,23 @@ extern uint32_t _estack;
 
 extern int main(void);
 
+__attribute__ ((noinline))
+void JumpToApplication(uint32_t address)
+{
+    // Set the vector table location.
+    SCB->VTOR = address;
+
+    auto app = reinterpret_cast<volatile uint32_t*>(address);
+
+    // Load the stack pointer from the application's vector table.
+    asm("ldr sp, %0" : "=m" (*app));
+
+    // Load the initial PC from the application's vector table and branch to
+    // the application's entry point.
+    asm("ldr lr, %0" : "=m" (*(app + 1)));
+    return;
+}
+
 void Reset_Handler(void)
 {
     // Copy the data segment initializers from flash to SRAM
@@ -41,11 +58,9 @@ void Reset_Handler(void)
     // Zero fill the bss segment
     std::memset(&_sbss, 0, 4 * (&_ebss - &_sbss));
 
-    // Call the clock system intitialization function
     SystemInit();
-
-    // Call the application's entry point
     main();
+    JumpToApplication(FLASH_BASE + BOOTLOADER_SIZE);
 
     for (;;);
 }
@@ -56,7 +71,7 @@ void Default_Handler(void)
     for (;;);
 }
 
-#define WEAK_DEFAULT __attribute__ ((weak, alias ("Default_Handler")))
+#define WEAK_DEFAULT extern "C" __attribute__ ((weak, alias ("Default_Handler")))
 
 WEAK_DEFAULT void NMI_Handler(void);
 WEAK_DEFAULT void HardFault_Handler(void);
@@ -148,6 +163,15 @@ WEAK_DEFAULT void OTG_HS_IRQHandler(void);
 WEAK_DEFAULT void DCMI_IRQHandler(void);
 WEAK_DEFAULT void HASH_RNG_IRQHandler(void);
 WEAK_DEFAULT void FPU_IRQHandler(void);
+WEAK_DEFAULT void UART7_IRQHandler(void);
+WEAK_DEFAULT void UART8_IRQHandler(void);
+WEAK_DEFAULT void SPI4_IRQHandler(void);
+WEAK_DEFAULT void SPI5_IRQHandler(void);
+WEAK_DEFAULT void SPI6_IRQHandler(void);
+WEAK_DEFAULT void SAI1_IRQHandler(void);
+WEAK_DEFAULT void LTDC_IRQHandler(void);
+WEAK_DEFAULT void LTDC_ER_IRQHandler(void);
+WEAK_DEFAULT void DMA2D_IRQHandler(void);
 
 using Vector = void (*)(void);
 
@@ -254,4 +278,13 @@ Vector VectorTable[] =
     0,
     HASH_RNG_IRQHandler,
     FPU_IRQHandler,
+    UART7_IRQHandler,
+    UART8_IRQHandler,
+    SPI4_IRQHandler,
+    SPI5_IRQHandler,
+    SPI6_IRQHandler,
+    SAI1_IRQHandler,
+    LTDC_IRQHandler,
+    LTDC_ER_IRQHandler,
+    DMA2D_IRQHandler,
 };

@@ -357,8 +357,8 @@ CP   = $(TRGT)objcopy
 AS   = $(TRGT)gcc -x assembler-with-cpp
 OD   = $(TRGT)objdump
 SZ   = $(TRGT)size
-HEX  = $(CP) -O ihex
-BIN  = $(CP) -O binary
+HEX  = $(CP) --gap-fill 0xFF -O ihex
+BIN  = $(CP) --gap-fill 0xFF -O binary
 
 # ARM-specific options here
 AOPT =
@@ -426,6 +426,54 @@ RULESPATH = $(CHIBIOS)/os/ports/GCC/ARMCMx
 include $(RULESPATH)/rules.mk
 
 # ------------------------------------------------------------------------------
+# Artifact generation
+# ------------------------------------------------------------------------------
+
+FW_ELF := $(BUILDDIR)/$(PROJECT).elf
+BL_HEX := bootloader/build/artifact/bl.hex
+FW_HEX := $(FW_ELF:.elf=.hex)
+PATCH_BIN := ${axoloti_home}/build/xpatch.bin
+
+APP_HEX := $(FW_ELF:.elf=-with-patch.hex)
+APP_WAV := $(APP_HEX:.hex=.wav)
+IMAGE_HEX := $(FW_ELF:.elf=-image.hex)
+IMAGE_BIN := $(IMAGE_HEX:.hex=.bin)
+AXOLOTI_BIN := $(FW_ELF:.elf=.bin)
+
+$(AXOLOTI_BIN): $(FW_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF $< $(BL_HEX)
+
+$(IMAGE_BIN): $(IMAGE_HEX)
+	$(BIN) -I ihex $< $@
+
+$(IMAGE_HEX): $(APP_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF $(APP_HEX) $(BL_HEX)
+
+include bootloader/bl_config.inc.mk
+
+$(APP_HEX): $(FW_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF --start-address 0x08004000 \
+		$(FW_HEX) $(PATCH_BIN) 0x080E0000
+
+$(APP_WAV): $(APP_HEX)
+	python3 bootloader/qpsk/encoder.py \
+		--sample-rate $(BOOTLOADER_SAMPLE_RATE) \
+		--symbol-rate $(BOOTLOADER_SYMBOL_RATE) \
+		--block-size $(BOOTLOADER_BLOCK_SIZE) \
+		--write-time 410 \
+		--flash-spec 16K:500:4 64K:1100:1 128K:2000:7 16K:500:4 64K:1100:1 128K:2000:7 \
+		--base-address 0x08000000 \
+		--start-address +$(BOOTLOADER_SIZE) \
+		--packet-size $(BOOTLOADER_PACKET_SIZE) \
+		--seed $(BOOTLOADER_CRC_SEED) \
+		--fill 0 \
+		--input-file $< \
+		--output-file $@
+
+.PHONY: artifacts
+artifacts: $(AXOLOTI_BIN) $(IMAGE_BIN) $(APP_WAV)
+
+# ------------------------------------------------------------------------------
 # Firmware flashing
 # ------------------------------------------------------------------------------
 
@@ -437,7 +485,7 @@ OPENOCD_CMD := $(OPENOCD_PATH)openocd -c "debug_level 1" $(PGM_INTERFACE) \
 	-c "stm32f4x.cpu configure -event reset-init {}"
 
 .PHONY: load
-load: $(BUILDDIR)/$(PROJECT).elf
+load: $(IMAGE_HEX)
 	$(OPENOCD_CMD) -c "program $< verify reset exit"
 
 .PHONY: reset

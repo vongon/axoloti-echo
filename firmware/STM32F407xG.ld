@@ -51,7 +51,7 @@ SECTIONS
     {
         KEEP (*(.bootloader))
         . = LENGTH(BOOTLOADER);
-    } > BOOTLOADER
+    } > BOOTLOADER =0xFF
 
     _text = .;
 

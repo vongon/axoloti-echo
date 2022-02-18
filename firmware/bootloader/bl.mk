@@ -21,19 +21,15 @@
 # SOFTWARE.
 
 STACK_SIZE := 1024
-BOOTLOADER_SIZE := 0x4000
-SAMPLE_RATE := 48000
-SYMBOL_RATE := 8000
-PACKET_SIZE := 256
-BLOCK_SIZE := 0x4000
-CRC_SEED := 0xC610C290
+include bl_config.inc.mk
 
 TARGET := bl.elf
-SOURCES := bl/*.cpp bl/hal/*.c
+SOURCES := bl/*.cpp bl/hal/*.c bl/drivers/*.cpp
 LD_SCRIPT := bl/app.ld
 
-TGT_CC := arm-none-eabi-gcc
-TGT_CXX := arm-none-eabi-g++
+-include ../env.inc.mk
+TGT_CC := $(TOOLCHAIN_PATH)arm-none-eabi-gcc
+TGT_CXX := $(TOOLCHAIN_PATH)arm-none-eabi-g++
 
 TGT_DEFS := \
 	STM32F429xx \
@@ -42,11 +38,11 @@ TGT_DEFS := \
 	USE_FULL_LL_DRIVER \
 	STACK_SIZE=$(STACK_SIZE) \
 	BOOTLOADER_SIZE=$(BOOTLOADER_SIZE) \
-	SAMPLE_RATE=$(SAMPLE_RATE) \
-	SYMBOL_RATE=$(SYMBOL_RATE) \
-	PACKET_SIZE=$(PACKET_SIZE) \
-	BLOCK_SIZE=$(BLOCK_SIZE) \
-	CRC_SEED=$(CRC_SEED) \
+	SAMPLE_RATE=$(BOOTLOADER_SAMPLE_RATE) \
+	SYMBOL_RATE=$(BOOTLOADER_SYMBOL_RATE) \
+	PACKET_SIZE=$(BOOTLOADER_PACKET_SIZE) \
+	BLOCK_SIZE=$(BOOTLOADER_BLOCK_SIZE) \
+	CRC_SEED=$(BOOTLOADER_CRC_SEED) \
 
 ARCHFLAGS := \
 	-mthumb \
@@ -71,6 +67,7 @@ OPTFLAGS := \
 	-finline-functions \
 
 TGT_INCDIRS  := . bl bl/hal
+
 TGT_CFLAGS   := -Os -g $(ARCHFLAGS) $(OPTFLAGS) $(WARNFLAGS) -std=c11
 TGT_CXXFLAGS := -Os -g $(ARCHFLAGS) $(OPTFLAGS) $(WARNFLAGS) -std=c++17 \
 	-fno-exceptions -fno-rtti -Wno-register
@@ -83,43 +80,49 @@ TGT_LDFLAGS  := $(ARCHFLAGS) \
 	-Wl,--defsym,STACK_SIZE=$(STACK_SIZE) \
 	-Wl,--defsym,BOOTLOADER_SIZE=$(BOOTLOADER_SIZE) \
 
+TARGET_ELF := $(TARGET_DIR)/$(TARGET)
+TARGET_LSS := $(TARGET_ELF:.elf=.lss)
+TARGET_HEX := $(TARGET_ELF:.elf=.hex)
+
 .PHONY: bl
-bl: $(TARGET_DIR)/$(TARGET)
+bl: $(TARGET_HEX) $(TARGET_LSS)
 
-OPENOCD_CMD := openocd -c "debug_level 1" -f board/stm32f4discovery.cfg
+%.lss: %.elf
+	$(TOOLCHAIN_PATH)arm-none-eabi-objdump -CdhtS $< > $@
 
-.PHONY: load-bl
-load-bl: $(TARGET_DIR)/$(TARGET)
-	$(OPENOCD_CMD) -c "program $< verify reset exit"
+%.hex: %.elf
+	$(TOOLCHAIN_PATH)arm-none-eabi-objcopy --gap-fill 0xFF -O ihex $< $@
 
-WAV_FILE := $(TARGET_DIR)/data.wav
-
-.PHONY: wav
-wav: bl/data.bin | $(TARGET_DIR)
-	python3 qpsk/encoder.py \
-		-s $(SAMPLE_RATE) -y $(SYMBOL_RATE) -b $(BLOCK_SIZE) \
-		-w 410 -f 16K:500:4 64K:1100:1 128K:2000:7 -x 0x08000000 \
-		-a +$(BOOTLOADER_SIZE) -p $(PACKET_SIZE) -e $(CRC_SEED) \
-		-i $< -o $(WAV_FILE)
-
-TGT_POSTCLEAN := $(RM) $(WAV_FILE)
+TGT_POSTCLEAN := $(RM) $(TARGET_LSS)
 
 define TGT_POSTMAKE
 @echo 'BINARY SIZE:' \
-	$$(arm-none-eabi-size $(TARGET_DIR)/$(TARGET) | tail -n1 | \
+	$$($(TOOLCHAIN_PATH)arm-none-eabi-size $(TARGET_DIR)/$(TARGET) | tail -n1 | \
 	awk '{ printf "0x%05X %d", $$1+$$2, $$1+$$2 }')
 @echo 'RAM USAGE:  ' \
-	$$(arm-none-eabi-size $(TARGET_DIR)/$(TARGET) | tail -n1 | \
+	$$($(TOOLCHAIN_PATH)arm-none-eabi-size $(TARGET_DIR)/$(TARGET) | tail -n1 | \
 	awk '{ printf "0x%05X %d", $$2+$$3, $$2+$$3 }')
 endef
 
-.PHONY: bl-sym
-bl-sym: $(TARGET_DIR)/$(TARGET)
-	arm-none-eabi-nm -CnS $< | less
+.PHONY: sym
+sym: $(TARGET_DIR)/$(TARGET)
+	$(TOOLCHAIN_PATH)arm-none-eabi-nm -CnS $< | less
 
-.PHONY: bl-top
-bl-top: $(TARGET_DIR)/$(TARGET)
-	arm-none-eabi-nm -CrS --size-sort $< | less
+.PHONY: top
+top: $(TARGET_DIR)/$(TARGET)
+	$(TOOLCHAIN_PATH)arm-none-eabi-nm -CrS --size-sort $< | less
+
+# ------------------------------------------------------------------------------
+# Firmware flashing
+# ------------------------------------------------------------------------------
+
+OPENOCD_CMD := $(OPENOCD_PATH)openocd -c "debug_level 1" $(PGM_INTERFACE) \
+	-f target/stm32f4x.cfg \
+	-c "stm32f4x.cpu configure -event reset-init {}"
+
+.PHONY: load
+load: $(TARGET_DIR)/$(TARGET)
+	$(OPENOCD_CMD) -c "program $< verify reset exit"
 
 .PHONY: verify
 verify:
@@ -130,21 +133,3 @@ verify:
 erase:
 	$(OPENOCD_CMD) -c init -c halt -c "flash erase_sector 0 0 last" \
 		-c reset -c exit
-
-.PHONY: openocd
-openocd:
-	$(OPENOCD_CMD) -c init -c reset -c halt
-
-.PHONY: debug
-debug: $(TARGET_DIR)/$(TARGET)
-	@if ! nc -z localhost 3333; then \
-		echo "\n\t[Error] OpenOCD is not running! \
-			Start it with: 'make openocd'\n"; exit 1; \
-	else \
-		gdb-multiarch -tui -ex "target extended localhost:3333" \
-			-ex "monitor arm semihosting enable" \
-			-ex "monitor reset halt" \
-			-ex "load" \
-			-ex "monitor reset init" \
-			$(GDBFLAGS) $<; \
-	fi
