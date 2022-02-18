@@ -4,6 +4,11 @@ export PATH=${axoloti_runtime}/platform_linux/bin:$PATH
 cd "${axoloti_firmware}"
 make -f Makefile.patch clean
 
+echo "Compiling bootloader..."
+cd bootloader
+make
+cd ..
+
 echo "Compiling firmware... ${axoloti_firmware}"
 mkdir -p build/obj
 mkdir -p build/lst

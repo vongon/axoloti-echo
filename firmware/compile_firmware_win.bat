@@ -13,6 +13,14 @@ if not exist "build\" mkdir build
 if not exist "build\obj\" mkdir build\obj
 if not exist "build\lst\" mkdir build\lst
 
+echo "Compiling bootloader..."
+cd bootloader
+make
+IF %ERRORLEVEL% NEQ 0 (
+    exit /b 1
+)
+cd ..
+
 echo "Compiling firmware..."
 make -f Makefile.patch clean
 make
