@@ -1,7 +1,7 @@
 <patch-1.0 appVersion="1.0.12">
    <obj type="osc/sine" uuid="6e094045cca76a9dbf7ebfa72e44e4700d2b3ba" name="osc_1" x="28" y="14">
       <params>
-         <frac32.s.map name="pitch" value="-24.0"/>
+         <frac32.s.map name="pitch" value="-20.0"/>
       </params>
       <attribs/>
    </obj>
@@ -51,6 +51,46 @@
          <combo attributeName="channel" selection="PA7 (ADC1_IN7)"/>
       </attribs>
    </obj>
+   <patchobj type="patch/object" uuid="9ad4ad4e-beca-4048-b331-fafd5639f9e7" name="STABILIZER" x="280" y="364">
+      <params>
+         <frac32.s.map name="threshold" value="0.2999997138977051"/>
+      </params>
+      <attribs/>
+      <object id="patch/object" uuid="9ad4ad4e-beca-4048-b331-fafd5639f9e7">
+         <inlets>
+            <frac32 name="i1"/>
+         </inlets>
+         <outlets>
+            <frac32 name="o1"/>
+         </outlets>
+         <displays/>
+         <params>
+            <frac32.s.map name="threshold"/>
+         </params>
+         <attribs/>
+         <includes/>
+         <code.declaration><![CDATA[int current_input;
+int prev_output;
+//int changeThreshold = 2097152; // frac32 1.0
+int changeThreshold;
+
+bool manualChange(int input){
+	if(input > (prev_output + changeThreshold)){
+		return true;
+	} else if (input < (prev_output - changeThreshold)){
+		return true;
+	}
+	return false;
+}]]></code.declaration>
+         <code.init><![CDATA[prev_output = 0;]]></code.init>
+         <code.krate><![CDATA[changeThreshold = param_threshold;
+if(manualChange(inlet_i1)){
+	current_input = inlet_i1;
+}
+outlet_o1 = current_input;
+prev_output = current_input;]]></code.krate>
+      </object>
+   </patchobj>
    <comment type="patch/comment" x="560" y="490" text="Open next tutorial -&gt;"/>
    <hyperlink type="patch/hyperlink" name="02_keyboard_controlled_sine_oscillator.axp" x="686" y="490"/>
    <nets>
@@ -70,6 +110,10 @@
       </net>
       <net>
          <source obj="analog_1" outlet="out"/>
+         <dest obj="STABILIZER" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="STABILIZER" outlet="o1"/>
          <dest obj="osc_1" inlet="pitch"/>
       </net>
    </nets>
@@ -78,8 +122,8 @@
    </settings>
    <notes><![CDATA[]]></notes>
    <windowPos>
-      <x>1302</x>
-      <y>94</y>
+      <x>277</x>
+      <y>678</y>
       <width>1030</width>
       <height>719</height>
    </windowPos>
