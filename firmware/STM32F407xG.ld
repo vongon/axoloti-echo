@@ -20,6 +20,13 @@
  * ST32F407xG memory setup.
  */
 
+/*
+SRAM1: origin 0x20000000, size 0x1C000 (112 kB)
+SRAM2: origin 0x2001C000, size 0x04000 (16 kB)
+SRAM3: origin 0x20020000, size 0x10000 (64 kB)
+CCM  : origin 0x10000000, size 0x10000 (64 kB)
+*/
+
 __main_stack_size__     = 0x400;
 __process_stack_size__  = 0x400;
 

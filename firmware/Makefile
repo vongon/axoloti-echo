@@ -500,6 +500,11 @@ erase:
 	$(OPENOCD_CMD) -c init -c halt -c "flash erase_sector 0 0 last" \
 		-c reset -c exit
 
+.PHONY: erase_patch
+erase_patch:
+	$(OPENOCD_CMD) -c init -c halt -c "flash erase_sector 0 11 last" \
+		-c reset -c exit
+
 .PHONY: dump_flash
 dump_flash:
 	mkdir -p dump
