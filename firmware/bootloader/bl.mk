@@ -25,7 +25,7 @@ include bl_config.inc.mk
 
 TARGET := bl.elf
 SOURCES := bl/*.cpp bl/hal/*.c bl/drivers/*.cpp
-LD_SCRIPT := bl/app.ld
+LD_SCRIPT := bl/bl.ld
 
 -include ../env.inc.mk
 TGT_CC := $(TOOLCHAIN_PATH)arm-none-eabi-gcc
