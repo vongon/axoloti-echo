@@ -24,7 +24,36 @@ STACK_SIZE := 1024
 include bl_config.inc.mk
 
 TARGET := bl.elf
-SOURCES := bl/*.cpp bl/hal/*.c bl/drivers/*.cpp
+SOURCES := bl/*.cpp bl/drivers/*.cpp \
+	bl/hal/stm32f4xx_hal_adc.c \
+	bl/hal/stm32f4xx_hal_adc_ex.c \
+	bl/hal/stm32f4xx_hal.c \
+	bl/hal/stm32f4xx_hal_cortex.c \
+	bl/hal/stm32f4xx_hal_dma.c \
+	bl/hal/stm32f4xx_hal_dma_ex.c \
+	bl/hal/stm32f4xx_hal_flash.c \
+	bl/hal/stm32f4xx_hal_flash_ex.c \
+	bl/hal/stm32f4xx_hal_gpio.c \
+	bl/hal/stm32f4xx_hal_i2c.c \
+	bl/hal/stm32f4xx_hal_i2c_ex.c \
+	bl/hal/stm32f4xx_hal_pwr.c \
+	bl/hal/stm32f4xx_hal_pwr_ex.c \
+	bl/hal/stm32f4xx_hal_rcc.c \
+	bl/hal/stm32f4xx_hal_rcc_ex.c \
+	bl/hal/stm32f4xx_hal_sai.c \
+	bl/hal/stm32f4xx_hal_sai_ex.c \
+	bl/hal/stm32f4xx_hal_tim.c \
+	bl/hal/stm32f4xx_hal_tim_ex.c \
+	bl/hal/stm32f4xx_ll_adc.c \
+	bl/hal/stm32f4xx_ll_dma.c \
+	bl/hal/stm32f4xx_ll_gpio.c \
+	bl/hal/stm32f4xx_ll_i2c.c \
+	bl/hal/stm32f4xx_ll_pwr.c \
+	bl/hal/stm32f4xx_ll_rcc.c \
+	bl/hal/stm32f4xx_ll_tim.c \
+	bl/hal/stm32f4xx_ll_utils.c \
+	bl/hal/system_stm32f4xx.c \
+
 LD_SCRIPT := bl/bl.ld
 
 -include ../env.inc.mk
@@ -34,7 +63,6 @@ TGT_CXX := $(TOOLCHAIN_PATH)arm-none-eabi-g++
 TGT_DEFS := \
 	STM32F429xx \
 	HSE_VALUE=8000000 \
-	USE_FULL_ASSERT \
 	USE_FULL_LL_DRIVER \
 	STACK_SIZE=$(STACK_SIZE) \
 	BOOTLOADER_SIZE=$(BOOTLOADER_SIZE) \
