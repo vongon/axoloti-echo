@@ -34,6 +34,13 @@ SECTIONS
     .vtable (ORIGIN(FLASH)) : AT (ORIGIN(FLASH))
     {
         KEEP (*(.vtable))
+        KEEP (*(.signature))
+        . = ALIGN (16);
+    } > FLASH
+
+    .lowmem : ALIGN(4)
+    {
+        KEEP (*(.lowmem))
         . = ALIGN (16);
     } > FLASH
 

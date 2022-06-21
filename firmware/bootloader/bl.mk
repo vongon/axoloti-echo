@@ -90,8 +90,11 @@ bl: $(TARGET_HEX) $(TARGET_LSS)
 %.lss: %.elf
 	$(TOOLCHAIN_PATH)arm-none-eabi-objdump -CdhtS $< > $@
 
-%.hex: %.elf
-	$(TOOLCHAIN_PATH)arm-none-eabi-objcopy --gap-fill 0xFF -O ihex $< $@
+$(TARGET_HEX): $(TARGET_ELF)
+	$(eval TEMPFILE := $(shell mktemp))
+	$(TOOLCHAIN_PATH)arm-none-eabi-objcopy --gap-fill 0xFF -O ihex $^ $(TEMPFILE)
+	python3 tools/pack_crc.py -i $(TEMPFILE) -o $@ -s $(BOOTLOADER_SIZE) -b 0x08000000
+	$(RM) $(TEMPFILE)
 
 TGT_POSTCLEAN := $(RM) $(TARGET_LSS)
 
@@ -121,7 +124,7 @@ OPENOCD_CMD := $(OPENOCD_PATH)openocd -c "debug_level 1" $(PGM_INTERFACE) \
 	-c "stm32f4x.cpu configure -event reset-init {}"
 
 .PHONY: load
-load: $(TARGET_DIR)/$(TARGET)
+load: $(TARGET_HEX)
 	$(OPENOCD_CMD) -c "program $< verify reset exit"
 
 .PHONY: verify

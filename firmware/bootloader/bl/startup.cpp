@@ -22,7 +22,9 @@
 
 #include <cstdint>
 #include <cstring>
+#include <atomic>
 #include "stm32f429xx.h"
+#include "verify_image.h"
 
 extern uint32_t _sidata;
 extern uint32_t _sdata;
@@ -32,6 +34,12 @@ extern uint32_t _ebss;
 extern uint32_t _estack;
 
 extern int main(void);
+
+__attribute__ ((flatten, section(".lowmem")))
+static bool BootloaderImageIsValid(void)
+{
+    return bl::VerifyImage(FLASH_BASE, BOOTLOADER_SIZE);
+}
 
 __attribute__ ((noinline))
 void JumpToApplication(uint32_t address)
@@ -50,8 +58,19 @@ void JumpToApplication(uint32_t address)
     return;
 }
 
+__attribute__ ((section(".lowmem")))
 void Reset_Handler(void)
 {
+    if (!BootloaderImageIsValid())
+    {
+        for (;;)
+        {
+            asm("wfi");
+        }
+    }
+
+    std::atomic_thread_fence(std::memory_order_seq_cst);
+
     // Copy the data segment initializers from flash to SRAM
     std::memcpy(&_sdata, &_sidata, 4 * (&_edata - &_sdata));
 
@@ -64,6 +83,15 @@ void Reset_Handler(void)
 
     for (;;);
 }
+
+uint32_t Signature[] __attribute__ ((section(".signature"))) =
+{
+    0xFF01FF02, // PREFIX 0
+    0xFF03FF04, // PREFIX 1
+    0xFFFFFFFF, // IMAGE LEN
+    0xFFFFFFFF, // CRC32
+    FLASH_BASE, // IMAGE START ADDRESS
+};
 
 extern "C"
 void Default_Handler(void)
