@@ -1,3 +1,5 @@
+include bootloader/bl_config.inc.mk
+
 #############################################################################
 # Build global options
 # NOTE: Can be overridden externally.
@@ -381,7 +383,7 @@ CPPWARN = -Wall -Wextra
 #
 
 # List all default C defines here, like -D_DEBUG=1
-DDEFS =
+DDEFS = -DBOOTLOADER_SIZE=$(BOOTLOADER_SIZE)
 
 # List all default ASM defines here, like -D_DEBUG=1
 DADEFS =
@@ -443,6 +445,12 @@ AXOLOTI_BIN := $(FW_ELF:.elf=.bin)
 $(BL_HEX): ;
 $(PATCH_BIN): ;
 
+$(FW_HEX): $(FW_ELF)
+	$(eval TEMPFILE := $(shell mktemp))
+	$(TOOLCHAIN_PATH)arm-none-eabi-objcopy --gap-fill 0xFF -O ihex $^ $(TEMPFILE)
+	python3 bootloader/tools/pack_crc.py -i $(TEMPFILE) -o $@ -x $(BOOTLOADER_SIZE) -b 0x08000000
+	$(RM) $(TEMPFILE)
+
 $(AXOLOTI_BIN): $(FW_HEX) $(BL_HEX)
 	python3 tools/merge.py -o $@ --fill 0xFF $^
 
@@ -451,8 +459,6 @@ $(IMAGE_BIN): $(IMAGE_HEX)
 
 $(IMAGE_HEX): $(APP_HEX) $(BL_HEX)
 	python3 tools/merge.py -o $@ --fill 0xFF $^
-
-include bootloader/bl_config.inc.mk
 
 $(APP_HEX): $(FW_HEX) $(PATCH_BIN)
 	python3 tools/merge.py -o $@ --fill 0xFF --start-address 0x08004000 \

@@ -65,6 +65,7 @@ SECTIONS
     startup : ALIGN(16) SUBALIGN(16)
     {
         KEEP(*(vectors))
+        KEEP(*(.signature))
         . = ALIGN(16);
     } > flash
 

@@ -30,12 +30,14 @@
 #include "drivers/button.h"
 #include "drivers/codec.h"
 
+#include "verify_image.h"
 #include "qpsk/decoder.h"
 
 namespace bl
 {
 
-constexpr uint32_t kAppStartAddress = FLASH_BASE + BOOTLOADER_SIZE;
+constexpr uint32_t kAppOrigin = FLASH_BASE + BOOTLOADER_SIZE;
+constexpr uint32_t kAppSize = 1024 * 1024;
 
 OutputPin red_led_;
 OutputPin green_led_;
@@ -211,8 +213,9 @@ extern "C"
 int main(void)
 {
     button1_.Init(GPIOC, GPIO_PIN_4);
+    bool request_bl = button1_.Pressed();
 
-    if (!button1_.Pressed())
+    if (!request_bl && VerifyImage(kAppOrigin, kAppSize))
     {
         return 0;
     }
@@ -232,7 +235,7 @@ int main(void)
 
     relay_control_.Set();
     codec_.Start();
-    uint32_t block_address = kAppStartAddress;
+    uint32_t block_address = kAppOrigin;
 
     auto& packet_led = led1_;
     auto& write_led = led2_;
@@ -303,7 +306,7 @@ int main(void)
             write_led.Clear();
             packet_led.Clear();
 
-            block_address = kAppStartAddress;
+            block_address = kAppOrigin;
             decoder_.Reset();
         }
     }

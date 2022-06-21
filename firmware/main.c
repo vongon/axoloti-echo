@@ -178,3 +178,12 @@ void _sbrk(void) {
   while (1) {
   }
 }
+
+uint32_t Signature[] __attribute__ ((section(".signature"))) =
+{
+    0xFF01FF02, // PREFIX 0
+    0xFF03FF04, // PREFIX 1
+    0xFFFFFFFF, // IMAGE LEN
+    0xFFFFFFFF, // CRC32
+    FLASH_BASE + BOOTLOADER_SIZE, // IMAGE START ADDRESS
+};
