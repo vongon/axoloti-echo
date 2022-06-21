@@ -58,6 +58,11 @@ public:
         LL_GPIO_TogglePin(base_, pin_);
     }
 
+    void Write(bool state)
+    {
+        state ? Set() : Clear();
+    }
+
 protected:
     GPIO_TypeDef* base_;
     uint32_t pin_;

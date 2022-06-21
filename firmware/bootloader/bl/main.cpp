@@ -57,7 +57,20 @@ constexpr uint32_t kPacketSize = PACKET_SIZE;
 constexpr uint32_t kBlockSize = BLOCK_SIZE;
 constexpr uint32_t kCRCSeed = CRC_SEED;
 
+enum BootloaderState
+{
+    STATE_IDLE,
+    STATE_DECODING,
+    STATE_WRITING,
+    STATE_ERROR,
+    STATE_FINISHED,
+};
+
 qpsk::Decoder<kSampleRate, kSymbolRate, kPacketSize, kBlockSize> decoder_;
+BootloaderState state_;
+uint32_t time_ms_;
+uint32_t packet_count_;
+uint32_t blocks_written_;
 
 #ifdef USE_FULL_ASSERT
 extern "C"
@@ -78,6 +91,42 @@ extern "C"
 void SysTick_Handler(void)
 {
     HAL_IncTick();
+
+    time_ms_++;
+    red_led_.Clear();
+    green_led_.Clear();
+    led1_.Clear();
+    led2_.Clear();
+
+    if (state_ == STATE_IDLE)
+    {
+        green_led_.Set();
+        led1_.Write((time_ms_ / 750) & 1);
+        led2_.Write((time_ms_ / 750) & 1);
+    }
+    else if (state_ == STATE_DECODING)
+    {
+        green_led_.Set();
+        led1_.Write(packet_count_ & 1);
+    }
+    else if (state_ == STATE_WRITING)
+    {
+        green_led_.Set();
+        led1_.Clear();
+        led2_.Set();
+    }
+    else if (state_ == STATE_ERROR)
+    {
+        red_led_.Set();
+        led1_.Write((time_ms_ / 100) & 1);
+        led2_.Write(!((time_ms_ / 100) & 1));
+    }
+    else if (state_ == STATE_FINISHED)
+    {
+        green_led_.Set();
+        led1_.Write((time_ms_ / 250) & 1);
+        led2_.Write((time_ms_ / 250) & 1);
+    }
 }
 
 void CodecCallback(int32_t sample)
@@ -166,8 +215,10 @@ const SectorInfo kSectors[] =
     { FLASH_SECTOR_23, 0x081E0000, 2000 },
 };
 
-bool WriteBlock(uint32_t address, const uint32_t* data)
+bool WriteBlock(const uint32_t* data)
 {
+    uint32_t address = kAppOrigin + blocks_written_ * kBlockSize;
+
     SectorInfo sector_info;
     bool do_erase = false;
 
@@ -206,7 +257,40 @@ bool WriteBlock(uint32_t address, const uint32_t* data)
         return false;
     }
 
+    blocks_written_++;
     return true;
+}
+
+void ResetDecoder(void)
+{
+    state_ = STATE_IDLE;
+    packet_count_ = 0;
+    blocks_written_ = 0;
+    decoder_.Reset();
+}
+
+void Init(void)
+{
+    assert_param(HAL_OK == HAL_Init());
+    InitPowerAndClock();
+
+    red_led_.Init(GPIOC, GPIO_PIN_6);
+    green_led_.Init(GPIOG, GPIO_PIN_6);
+    led1_.Init(GPIOB, GPIO_PIN_0);
+    led2_.Init(GPIOB, GPIO_PIN_1);
+    button2_.Init(GPIOC, GPIO_PIN_5);
+    relay_control_.Init(GPIOC, GPIO_PIN_12);
+    codec_.Init(CodecCallback);
+    decoder_.Init(kCRCSeed);
+    ResetDecoder();
+    time_ms_ = 0;
+    relay_control_.Set();
+}
+
+void Start(void)
+{
+    __enable_irq();
+    codec_.Start();
 }
 
 extern "C"
@@ -220,27 +304,8 @@ int main(void)
         return 0;
     }
 
-    assert_param(HAL_OK == HAL_Init());
-    InitPowerAndClock();
-
-    red_led_.Init(GPIOC, GPIO_PIN_6);
-    green_led_.Init(GPIOG, GPIO_PIN_6);
-    led1_.Init(GPIOB, GPIO_PIN_0);
-    led2_.Init(GPIOB, GPIO_PIN_1);
-    button2_.Init(GPIOC, GPIO_PIN_5);
-    relay_control_.Init(GPIOC, GPIO_PIN_12);
-    codec_.Init(CodecCallback);
-    decoder_.Init(kCRCSeed);
-    __enable_irq();
-
-    relay_control_.Set();
-    codec_.Start();
-    uint32_t block_address = kAppOrigin;
-
-    auto& packet_led = led1_;
-    auto& write_led = led2_;
-    auto& error_led = red_led_;
-    auto& success_led = green_led_;
+    Init();
+    Start();
 
     for (;;)
     {
@@ -248,66 +313,34 @@ int main(void)
 
         if (result == qpsk::RESULT_PACKET_COMPLETE)
         {
-            packet_led.Toggle();
+            packet_count_++;
+            state_ = STATE_DECODING;
         }
         else if (result == qpsk::RESULT_BLOCK_COMPLETE)
         {
-            packet_led.Clear();
-            write_led.Set();
+            packet_count_++;
+            state_ = STATE_WRITING;
 
-            if (!WriteBlock(block_address, decoder_.block_data()))
+            if (!WriteBlock(decoder_.block_data()))
             {
                 decoder_.Abort();
             }
 
-            block_address += kBlockSize;
-            write_led.Clear();
+            state_ = STATE_DECODING;
         }
         else if (result == qpsk::RESULT_END)
         {
-            for (uint32_t i = 0; i < 20; i++)
-            {
-                success_led.Toggle();
-                HAL_Delay(100);
-            }
-
+            state_ = STATE_FINISHED;
             codec_.Stop();
+            HAL_Delay(2000);
             NVIC_SystemReset();
         }
         else if (result == qpsk::RESULT_ERROR)
         {
-            packet_led.Clear();
-
-            switch (decoder_.error())
-            {
-                case qpsk::ERROR_SYNC:
-                    write_led.Set();
-                    break;
-                case qpsk::ERROR_CRC:
-                    packet_led.Set();
-                    break;
-                case qpsk::ERROR_OVERFLOW:
-                    write_led.Set();
-                    packet_led.Set();
-                    break;
-                default:
-                    break;
-            }
-
-            while (!button1_.Pressed())
-            {
-                error_led.Toggle();
-                HAL_Delay(100);
-            }
-
-            error_led.Set();
+            state_ = STATE_ERROR;
+            while (!button1_.Pressed());
             while (button1_.Pressed());
-            error_led.Clear();
-            write_led.Clear();
-            packet_led.Clear();
-
-            block_address = kAppOrigin;
-            decoder_.Reset();
+            ResetDecoder();
         }
     }
 }
