@@ -222,15 +222,13 @@ int main(void)
 
     red_led_.Init(GPIOC, GPIO_PIN_6);
     green_led_.Init(GPIOG, GPIO_PIN_6);
-    led1_.Init(GPIOB, GPIO_PIN_0);
-    led2_.Init(GPIOB, GPIO_PIN_1);
+    led1_.Init(GPIOC, GPIO_PIN_13);
+    led2_.Init(GPIOC, GPIO_PIN_14);
     button2_.Init(GPIOC, GPIO_PIN_5);
-    relay_control_.Init(GPIOC, GPIO_PIN_12);
     codec_.Init(CodecCallback);
     decoder_.Init(kCRCSeed);
     __enable_irq();
 
-    relay_control_.Set();
     codec_.Start();
     uint32_t block_address = kAppStartAddress;
 
