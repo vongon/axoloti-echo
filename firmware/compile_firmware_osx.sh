@@ -1,10 +1,15 @@
 #!/bin/sh
 export PATH=${axoloti_runtime}/platform_osx/bin:$PATH
 
-echo "Compiling firmware... ${axoloti_firmware}"
 cd "${axoloti_firmware}"
 make -f Makefile.patch clean
 
+echo "Compiling bootloader..."
+cd bootloader
+make
+cd ..
+
+echo "Compiling firmware... ${axoloti_firmware}"
 mkdir -p build/obj
 mkdir -p build/lst
 if ! make $1; then

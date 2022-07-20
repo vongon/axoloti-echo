@@ -47,8 +47,11 @@ endif
 ifeq ($(BUILDDIR),.)
   BUILDDIR = build
 endif
-OUTFILES = $(BUILDDIR)/$(PROJECT).elf $(BUILDDIR)/$(PROJECT).hex \
-           $(BUILDDIR)/$(PROJECT).bin $(BUILDDIR)/$(PROJECT).dmp
+OUTFILES = $(BUILDDIR)/$(PROJECT).elf \
+	$(BUILDDIR)/$(PROJECT).hex \
+	$(BUILDDIR)/$(PROJECT).bin \
+	$(BUILDDIR)/$(PROJECT).dmp \
+	$(BUILDDIR)/$(PROJECT).lss
 
 # Source files groups and paths
 ifeq ($(USE_THUMB),yes)
@@ -238,6 +241,9 @@ else
 	@echo
 	@echo Done
 endif
+
+%.lss: %.elf $(LDSCRIPT)
+	$(OD) -CdhtS $< > $@
 
 clean:
 	@echo Cleaning

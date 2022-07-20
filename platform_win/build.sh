@@ -26,11 +26,11 @@ fi
 
 if [ ! -f "bin/arm-none-eabi-gcc.exe" ];
 then
-    ARCHIVE=gcc-arm-none-eabi-4_9-2015q2-20150609-win32.zip
+    ARCHIVE=gcc-arm-none-eabi-9-2020-q2-update-win32.zip
     if [ ! -f ${ARCHIVE} ]; 
     then
         echo "downloading ${ARCHIVE}"
-        curl -L https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/${ARCHIVE} > ${ARCHIVE}
+        curl -L https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2020q2/$ARCHIVE > $ARCHIVE
     else
         echo "${ARCHIVE} already downloaded"
     fi    

@@ -69,7 +69,7 @@ public class axoloti_core {
 
     public int getPatchAddr() {
         // SRAM1 - must match with patch.ld
-        return 0x20011000;
+        return 0x2000B000;
     }
 
     public int getSDRAMAddr() {

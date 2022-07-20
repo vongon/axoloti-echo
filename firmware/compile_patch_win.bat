@@ -10,6 +10,13 @@ make -f Makefile.patch
 IF %ERRORLEVEL% NEQ 0 (
 	exit /b 1
 )
+
+echo "Generating firmware artifacts"
+make artifacts
+IF %ERRORLEVEL% NEQ 0 (
+    exit /b 1
+)
+
 goto :eof
 
 rem --- path shortening

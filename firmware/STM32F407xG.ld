@@ -20,12 +20,20 @@
  * ST32F407xG memory setup.
  */
 
+/*
+SRAM1: origin 0x20000000, size 0x1C000 (112 kB)
+SRAM2: origin 0x2001C000, size 0x04000 (16 kB)
+SRAM3: origin 0x20020000, size 0x10000 (64 kB)
+CCM  : origin 0x10000000, size 0x10000 (64 kB)
+*/
+
 __main_stack_size__     = 0x400;
 __process_stack_size__  = 0x400;
 
 MEMORY
 {
-    flash (rx): org = 0x08000000, len = 896k /* last 128kB for patch storage*/
+    BOOTLOADER (rx): org = 0x08000000, len = 16k
+    flash (rx): org = 0x08004000, len = 880k /* last 128kB for patch storage*/
     ram : org = 0x20000200, len = 0x0AE00 /* 44k - first 0x200 for vector table */
     SRAM2  : org = 0x2001E000, len = 0x00002000 /* second half (8kB) of SRAM2 for DMA*/      
     CCMRAMEND  : org = 0x1000C000, len = 10k /* for stacks */    
@@ -45,11 +53,20 @@ ENTRY(ResetHandler)
 SECTIONS
 {
     . = 0;
+
+    .bootloader (ORIGIN(BOOTLOADER)) : AT (ORIGIN(BOOTLOADER))
+    {
+        KEEP (*(.bootloader))
+        . = LENGTH(BOOTLOADER);
+    } > BOOTLOADER =0xFF
+
     _text = .;
 
     startup : ALIGN(16) SUBALIGN(16)
     {
         KEEP(*(vectors))
+        KEEP(*(.signature))
+        . = ALIGN(16);
     } > flash
 
     constructors : ALIGN(4) SUBALIGN(4)
@@ -58,6 +75,7 @@ SECTIONS
         KEEP(*(SORT(.init_array.*)))
         KEEP(*(.init_array))
         PROVIDE(__init_array_end = .);
+        . = ALIGN(16);
     } > flash
 
     destructors : ALIGN(4) SUBALIGN(4)
@@ -66,6 +84,7 @@ SECTIONS
         KEEP(*(.fini_array))
         KEEP(*(SORT(.fini_array.*)))
         PROVIDE(__fini_array_end = .);
+        . = ALIGN(16);
     } > flash
 
     .text : ALIGN(16) SUBALIGN(16)
@@ -78,6 +97,7 @@ SECTIONS
         *(.glue_7t)
         *(.glue_7)
         *(.gcc*)
+        . = ALIGN(16);
     } > flash
 
     .ARM.extab :

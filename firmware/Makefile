@@ -1,3 +1,5 @@
+include bootloader/bl_config.inc.mk
+
 #############################################################################
 # Build global options
 # NOTE: Can be overridden externally.
@@ -5,7 +7,10 @@
 
 # Compiler options here.
 ifeq ($(USE_OPT),)
-  USE_OPT = -O2 -ggdb -fomit-frame-pointer -falign-functions=16 -fno-math-errno -Wno-unused-parameter
+  USE_OPT = -O2 -ggdb \
+	-fomit-frame-pointer -falign-functions=16 -fno-math-errno \
+	-Wno-unused-parameter \
+	-DCORTEX_VTOR_INIT=0x08004000
 endif
 
 # C specific options here (added to USE_OPT).
@@ -204,7 +209,8 @@ CSRC = $(PORTSRC) \
        ${FIRMWARE}/exceptions.c \
        ${FIRMWARE}/watchdog.c \
        ${FIRMWARE}/sysmon.c \
-       ${FIRMWARE}/axoloti_memory.c
+       ${FIRMWARE}/axoloti_memory.c \
+       ${FIRMWARE}/placeholder_vectors.c
 
 #optional modules
 ifneq (,$(findstring BRAIDS,$(AXO_OPT_MODULES)))
@@ -340,8 +346,8 @@ INCDIR = ${CMSIS}/Include \
 
 MCU  = cortex-m4
 
-#TRGT = arm-elf-
-TRGT = arm-none-eabi-
+-include env.inc.mk
+TRGT = $(TOOLCHAIN_PATH)arm-none-eabi-
 CC   = $(TRGT)gcc
 CPPC = $(TRGT)g++
 # Enable loading with g++ only if you need C++ runtime support.
@@ -353,8 +359,8 @@ CP   = $(TRGT)objcopy
 AS   = $(TRGT)gcc -x assembler-with-cpp
 OD   = $(TRGT)objdump
 SZ   = $(TRGT)size
-HEX  = $(CP) -O ihex
-BIN  = $(CP) -O binary
+HEX  = $(CP) --gap-fill 0xFF -O ihex
+BIN  = $(CP) --gap-fill 0xFF -O binary
 
 # ARM-specific options here
 AOPT =
@@ -377,7 +383,7 @@ CPPWARN = -Wall -Wextra
 #
 
 # List all default C defines here, like -D_DEBUG=1
-DDEFS =
+DDEFS = -DBOOTLOADER_SIZE=$(BOOTLOADER_SIZE)
 
 # List all default ASM defines here, like -D_DEBUG=1
 DADEFS =
@@ -420,3 +426,95 @@ ULIBS = -lm
 
 RULESPATH = $(CHIBIOS)/os/ports/GCC/ARMCMx
 include $(RULESPATH)/rules.mk
+
+# ------------------------------------------------------------------------------
+# Artifact generation
+# ------------------------------------------------------------------------------
+
+FW_ELF := $(BUILDDIR)/$(PROJECT).elf
+FW_HEX := $(FW_ELF:.elf=.hex)
+BL_HEX := bootloader/build/artifact/bl.hex
+PATCH_BIN := ${axoloti_home}/build/xpatch.bin
+
+APP_HEX := $(FW_ELF:.elf=-with-patch.hex)
+APP_WAV := $(APP_HEX:.hex=.wav)
+IMAGE_HEX := $(FW_ELF:.elf=-image.hex)
+IMAGE_BIN := $(IMAGE_HEX:.hex=.bin)
+AXOLOTI_BIN := $(FW_ELF:.elf=.bin)
+
+$(BL_HEX): ;
+$(PATCH_BIN): ;
+
+$(FW_HEX): $(FW_ELF)
+	$(eval TEMPFILE := $(shell mktemp))
+	$(TOOLCHAIN_PATH)arm-none-eabi-objcopy --gap-fill 0xFF -O ihex $^ $(TEMPFILE)
+	python3 bootloader/tools/pack_crc.py -i $(TEMPFILE) -o $@ -x $(BOOTLOADER_SIZE) -b 0x08000000
+	$(RM) $(TEMPFILE)
+
+$(AXOLOTI_BIN): $(FW_HEX) $(BL_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF $^
+
+$(IMAGE_BIN): $(IMAGE_HEX)
+	$(BIN) -I ihex $< $@
+
+$(IMAGE_HEX): $(APP_HEX) $(BL_HEX)
+	python3 tools/merge.py -o $@ --fill 0xFF $^
+
+$(APP_HEX): $(FW_HEX) $(PATCH_BIN)
+	python3 tools/merge.py -o $@ --fill 0xFF --start-address 0x08004000 \
+		$^ 0x080E0000
+
+$(APP_WAV): $(APP_HEX)
+	python3 bootloader/qpsk/encoder.py \
+		--sample-rate $(BOOTLOADER_SAMPLE_RATE) \
+		--symbol-rate $(BOOTLOADER_SYMBOL_RATE) \
+		--block-size $(BOOTLOADER_BLOCK_SIZE) \
+		--write-time 410 \
+		--flash-spec 16K:500:4 64K:1100:1 128K:2000:7 16K:500:4 64K:1100:1 128K:2000:7 \
+		--base-address 0x08000000 \
+		--start-address +$(BOOTLOADER_SIZE) \
+		--packet-size $(BOOTLOADER_PACKET_SIZE) \
+		--seed $(BOOTLOADER_CRC_SEED) \
+		--fill 0 \
+		--input-file $< \
+		--output-file $@
+
+.PHONY: artifacts
+artifacts: $(AXOLOTI_BIN) $(IMAGE_BIN) $(APP_WAV)
+
+# ------------------------------------------------------------------------------
+# Firmware flashing
+# ------------------------------------------------------------------------------
+
+OPENOCD_PATH ?=
+PGM_INTERFACE ?= -f interface/stlink.cfg
+
+OPENOCD_CMD := $(OPENOCD_PATH)openocd -c "debug_level 1" $(PGM_INTERFACE) \
+	-f target/stm32f4x.cfg \
+	-c "stm32f4x.cpu configure -event reset-init {}"
+
+.PHONY: load
+load: $(IMAGE_HEX)
+	$(OPENOCD_CMD) -c "program $< verify reset exit"
+
+.PHONY: reset
+reset:
+	$(OPENOCD_CMD) -c init -c reset -c exit
+
+.PHONY: erase
+erase:
+	$(OPENOCD_CMD) -c init -c halt -c "flash erase_sector 0 0 last" \
+		-c reset -c exit
+
+.PHONY: erase_patch
+erase_patch:
+	$(OPENOCD_CMD) -c init -c halt -c "flash erase_sector 0 11 last" \
+		-c reset -c exit
+
+.PHONY: dump_flash
+dump_flash:
+	mkdir -p dump
+	$(OPENOCD_CMD) -c init -c halt \
+		-c "flash read_bank 0 dump/flash.bin" \
+		-c reset -c exit
+	xxd dump/flash.bin > dump/flash.xxd
