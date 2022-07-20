@@ -43,7 +43,6 @@ OutputPin red_led_;
 OutputPin green_led_;
 OutputPin led1_;
 OutputPin led2_;
-OutputPin relay_control_;
 
 Button button1_;
 Button button2_;
@@ -276,15 +275,12 @@ void Init(void)
 
     red_led_.Init(GPIOC, GPIO_PIN_6);
     green_led_.Init(GPIOG, GPIO_PIN_6);
-    led1_.Init(GPIOB, GPIO_PIN_0);
-    led2_.Init(GPIOB, GPIO_PIN_1);
-    button2_.Init(GPIOC, GPIO_PIN_5);
-    relay_control_.Init(GPIOC, GPIO_PIN_12);
+    led1_.Init(GPIOC, GPIO_PIN_13);
+    led2_.Init(GPIOC, GPIO_PIN_14);
     codec_.Init(CodecCallback);
     decoder_.Init(kCRCSeed);
     ResetDecoder();
     time_ms_ = 0;
-    relay_control_.Set();
 }
 
 void Start(void)
@@ -297,7 +293,8 @@ extern "C"
 int main(void)
 {
     button1_.Init(GPIOC, GPIO_PIN_4);
-    bool request_bl = button1_.Pressed();
+    button2_.Init(GPIOC, GPIO_PIN_5);
+    bool request_bl = (button1_.Pressed() && button2_.Pressed());
 
     if (!request_bl && VerifyImage(kAppOrigin, kAppSize))
     {
