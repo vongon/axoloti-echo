@@ -92,6 +92,9 @@ int main(void) {
   halInit();
   chSysInit();
 
+  palSetPadMode(GPIOB, 6, PAL_MODE_OUTPUT_PUSHPULL);
+  palClearPad(GPIOB, 6);
+
   sdcard_init();
   sysmon_init();
 
@@ -114,8 +117,8 @@ int main(void) {
   InitPConnection();
 
   // display SPI CS?
-  palSetPadMode(GPIOC, 1, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetPad(GPIOC, 1);
+  //palSetPadMode(GPIOC, 1, PAL_MODE_OUTPUT_PUSHPULL);
+  //palSetPad(GPIOC, 1); comment out so mono led doesn't blink on polyphrase
 
   chThdSleepMilliseconds(10);
 

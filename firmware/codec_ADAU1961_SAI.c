@@ -153,6 +153,10 @@ void ADAU1961_ReadRegister6(uint16_t RegisterAddr) {
 }
 
 void ADAU1961_WriteRegister(uint16_t RegisterAddr, uint8_t RegisterValue) {
+  ADAU1961_WriteRegister_ErrorOptional(RegisterAddr, RegisterValue, true);
+}
+
+void ADAU1961_WriteRegister_ErrorOptional(uint16_t RegisterAddr, uint8_t RegisterValue, bool throwError) {
   msg_t status;
   i2ctxbuf[0] = RegisterAddr >> 8;
   i2ctxbuf[1] = RegisterAddr;
@@ -175,7 +179,7 @@ void ADAU1961_WriteRegister(uint16_t RegisterAddr, uint8_t RegisterValue) {
   static uint8_t rd;
   rd = ADAU1961_ReadRegister(RegisterAddr);
   if (rd != RegisterValue) {
-    setErrorFlag(ERROR_CODEC_I2C);
+    if(throwError) setErrorFlag(ERROR_CODEC_I2C);
   } else {
   }
   chThdSleepMilliseconds(1);
@@ -314,11 +318,11 @@ void codec_ADAU1961_hw_init(uint16_t samplerate) {
     ADAU1961_WriteRegister(ADAU1961_REG_R41_CPORTP1, 0xAA);
     ADAU1961_WriteRegister(ADAU1961_REG_R42_JACKDETP, 0x00);
 
-    // ADAU1761 Registers
-    ADAU1961_WriteRegister(ADAU1961_REG_R65_CLKEN0, 0x7F);
-    ADAU1961_WriteRegister(ADAU1961_REG_R66_CLKEN1, 0x03);
-    ADAU1961_WriteRegister(ADAU1961_REG_R58_SIRC, 0x01);
-    ADAU1961_WriteRegister(ADAU1961_REG_R59_SORC, 0x01);
+    // ADAU1761 Registers, error option set false because sometimes we use ADAU1361/1961 which don't have these I2C registers
+    ADAU1961_WriteRegister_ErrorOptional(ADAU1961_REG_R65_CLKEN0, 0x7F, false);
+    ADAU1961_WriteRegister_ErrorOptional(ADAU1961_REG_R66_CLKEN1, 0x03, false);
+    ADAU1961_WriteRegister_ErrorOptional(ADAU1961_REG_R58_SIRC, 0x01, false);
+    ADAU1961_WriteRegister_ErrorOptional(ADAU1961_REG_R59_SORC, 0x01, false);
 
     chThdSleepMilliseconds(10);
 
